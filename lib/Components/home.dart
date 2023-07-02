@@ -11,21 +11,37 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int quantity = 0;
+  int zingerBurgerQuantity = 0;
+  int rollParathaQuantity = 0;
 
-  void incrementQuantity() {
+  void incrementZingerBurgerQuantity() {
     setState(() {
-      quantity++;
+      zingerBurgerQuantity++;
     });
   }
 
-  void decrementQuantity() {
+  void decrementZingerBurgerQuantity() {
     setState(() {
-      if (quantity > 0) {
-        quantity--;
+      if (zingerBurgerQuantity > 0) {
+        zingerBurgerQuantity--;
       }
     });
   }
+
+  void incrementRollParathaQuantity() {
+    setState(() {
+      rollParathaQuantity++;
+    });
+  }
+
+  void decrementRollParathaQuantity() {
+    setState(() {
+      if (rollParathaQuantity > 0) {
+        rollParathaQuantity--;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -110,10 +126,10 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             IconButton(
                               icon: Icon(Icons.remove),
-                              onPressed: decrementQuantity,
+                              onPressed: decrementZingerBurgerQuantity,
                             ),
                             Text(
-                              quantity.toString(),
+                              zingerBurgerQuantity.toString(),
                               style: TextStyle(
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.bold,
@@ -121,7 +137,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                             IconButton(
                               icon: Icon(Icons.add),
-                              onPressed: incrementQuantity,
+                              onPressed: incrementZingerBurgerQuantity,
                             ),
                           ],
                         ),
@@ -136,6 +152,8 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       children: [
                         Image.asset(
+                          height:120,
+                          width: 120,
                           'assets/rollParatha.png',
                           fit: BoxFit.contain,
                         ),
@@ -154,6 +172,26 @@ class _HomePageState extends State<HomePage> {
                             fontWeight: FontWeight.bold,
                             color: Color.fromARGB(255, 255, 100, 64),
                           ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.remove),
+                              onPressed: decrementRollParathaQuantity,
+                            ),
+                            Text(
+                              rollParathaQuantity.toString(),
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.add),
+                              onPressed: incrementRollParathaQuantity,
+                            ),
+                          ],
                         ),
                       ],
                     ),

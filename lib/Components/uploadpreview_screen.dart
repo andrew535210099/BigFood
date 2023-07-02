@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import '../UserData/user_provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-
 class ProfileScreen extends StatefulWidget {
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
