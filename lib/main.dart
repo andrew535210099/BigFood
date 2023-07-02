@@ -27,6 +27,7 @@ import 'Components/viamethod_screen.dart';
 import 'Components/home.dart';
 import 'Components/homebar.dart';
 import './UserData/user_provider.dart';
+import 'UserData/cart_screen';
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -80,6 +81,7 @@ class MyApp extends StatelessWidget {
         '/filter' : (context) => FilterScreenPage(),
         '/chat' : (context) => Chat(),
         '/profilepage' : (context) => ProfilePage(),
+        '/cartScreen' : (context) => CartScreen(),
       },
     );
   }

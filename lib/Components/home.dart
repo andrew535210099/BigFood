@@ -11,6 +11,21 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int quantity = 0;
+
+  void incrementQuantity() {
+    setState(() {
+      quantity++;
+    });
+  }
+
+  void decrementQuantity() {
+    setState(() {
+      if (quantity > 0) {
+        quantity--;
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -70,6 +85,8 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Image.asset(
                           'assets/zingerBurger.png',
+                          height:120,
+                          width: 120,
                           fit: BoxFit.contain,
                         ),
                         Text(
@@ -88,6 +105,27 @@ class _HomePageState extends State<HomePage> {
                             color: Color.fromARGB(255, 255, 100, 64),
                           ),
                         ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.remove),
+                              onPressed: decrementQuantity,
+                            ),
+                            Text(
+                              quantity.toString(),
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.add),
+                              onPressed: incrementQuantity,
+                            ),
+                          ],
+                        ),
+
                       ],
                     ),
                   ),

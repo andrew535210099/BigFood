@@ -1,0 +1,61 @@
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class CartScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+      elevation: 0,
+        title: Text('BigFood',
+        style: TextStyle(
+        fontFamily: 'Montserrat',
+        fontSize: 25,
+        fontWeight: FontWeight.bold,
+        color: Colors.black,
+      ),),
+      backgroundColor: Color.fromARGB(255, 255, 100, 64),
+        iconTheme: IconThemeData(
+    color: Colors.black,
+    
+  ),
+    ),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance.collection('cart').snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          }
+
+          if (!snapshot.hasData) {
+            return CircularProgressIndicator();
+          }
+
+          List<DocumentSnapshot> cartItems = snapshot.data!.docs;
+
+          if (cartItems.isEmpty) {
+            return Center(
+              child: Text('Cart is empty'),
+            );
+          }
+
+          return ListView.builder(
+            itemCount: cartItems.length,
+            itemBuilder: (context, index) {
+              Map<String, dynamic> cartItem = cartItems[index].data() as Map<String, dynamic>;
+              String itemName = cartItem['itemName'];
+              double itemPrice = cartItem['itemPrice'];
+              int quantity = cartItem['quantity'];
+
+              return ListTile(
+                title: Text(itemName),
+                subtitle: Text('Quantity: $quantity'),
+                trailing: Text('\$${itemPrice.toStringAsFixed(2)}'),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+}
