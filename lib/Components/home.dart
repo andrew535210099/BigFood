@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:duds/Components/uploadpreview_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
+
+import '../UserData/user_provider.dart';
 
 void main() {
   runApp(HomePage());
@@ -11,6 +15,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  late User _user;
+
+  void initState(){
+    super.initState();
+    addToCart();
+  }
+
   int zingerBurgerQuantity = 0;
   int rollParathaQuantity = 0;
 
@@ -41,6 +54,61 @@ class _HomePageState extends State<HomePage> {
       }
     });
   }
+
+  void addToCart() async {
+  _user = _auth.currentUser!;
+  final String userUID = _user.uid;
+
+  try {
+    // Mengambil referensi koleksi carts
+    CollectionReference cartRef = _firestore.collection('carts');
+
+    // Mengambil dokumen pengguna berdasarkan UID
+    DocumentSnapshot userSnapshot = await _firestore.collection('users').doc(userUID).get();
+    
+    
+    if (userSnapshot.exists) {
+      final userData = userSnapshot.data() as Map<String, dynamic>;
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+      // Mendapatkan email pengguna dari dokumen pengguna
+      final userEmail = userProvider.getEmail();
+
+      // Membuat data produk untuk ditambahkan ke cart
+      Map<String, dynamic> productData = {
+        'userEmail': userEmail,
+        'zingerBurgerQuantity': zingerBurgerQuantity,
+        'rollParathaQuantity': rollParathaQuantity,
+      };
+
+      // Memeriksa apakah ada cart yang terkait dengan email pengguna
+      QuerySnapshot existingCart = await cartRef.where('userEmail', isEqualTo: userEmail).get();
+      
+      if (existingCart.docs.isNotEmpty) {
+        // Jika cart sudah ada, perbarui dokumennya
+        String cartDocId = existingCart.docs[0].id;
+        await cartRef.doc(cartDocId).update(productData);
+      } else {
+        // Jika cart belum ada, tambahkan dokumen baru
+        await cartRef.add(productData);
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Product added to cart.')),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('User document not found.')),
+      );
+    }
+  } catch (error) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Error occurred: $error')),
+    );
+  }
+}
+
+
 
   @override
   Widget build(BuildContext context) {
