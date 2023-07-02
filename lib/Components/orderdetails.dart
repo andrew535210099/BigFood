@@ -14,149 +14,144 @@ class OrderDetail extends StatelessWidget {
   }
 }
 
+class OrderItem {
+  final String title;
+  final int qty;
+  final double price;
+  final String image;
+
+  OrderItem(this.title, this.qty, this.price, this.image);
+
+  // OrderItem({this.title, this.qty, this.price,this.image});
+}
+
+class OrderListItem extends StatelessWidget {
+  final OrderItem item;
+
+  const OrderListItem(Key? key, this.item):super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+              Container(
+        width: 100,
+        height: 100,
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: item.image != null? Image.network(item.image,fit: BoxFit.cover,):null,
+      ),
+      const SizedBox(width: 20.0,),
+      Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(item.title,
+                style: TextStyle(
+                fontSize: 15.0,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 0, 0, 0),
+              ),
+            
+            ),
+            const SizedBox(height: 5.0,),
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.grey,
+                  width: 1.0,
+                ),
+                borderRadius: BorderRadius.circular(5.0),
+
+              ),
+              child: Row(
+                children: [
+                  IconButton(
+                    padding: const EdgeInsets.all(4.0),
+                  icon: Icon(Icons.minimize),
+                  onPressed: (){
+
+                  },
+
+                  ),
+                  Text("${item.qty}",
+                //   style: TextStyle(
+                // fontSize: 15.0,
+                // fontWeight: FontWeight.bold,
+                // color: Color.fromARGB(255, 0, 0, 0),
+                    ),
+                  IconButton(
+                  padding: const EdgeInsets.all(4.0),
+                  icon: Icon(Icons.add),
+                  onPressed: (){
+                    
+                  },
+
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      const SizedBox(width: 10.0,),
+      Text("${item.price * item.qty}",
+                style: TextStyle(
+                fontSize: 15.0,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 0, 0, 0),
+              ),
+              ),
+
+      ],
+    );
+  }
+}
+
+
 class OrderDetaill extends StatelessWidget {
   const OrderDetaill({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.only(top: 10.0, left: 15.0, right: 15.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: EdgeInsets.only(top: 10.0),
-              child: Text(
-                'Find Your \nFavorite Food',
-                style: TextStyle(
-                  fontSize: 30.0,
-                  fontWeight: FontWeight.bold,
+      body: Stack(
+        children: [
+          // SizedBox(
+          //   height: double.maxFinite,
+          //   width: 100,
+          // ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListView(
+              children: [
+                Text("Order Detail",
+                    style: TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 0, 0, 0),
+              ),),
+                const SizedBox(height: 20.0,),
+                OrderListItem(key,
+                OrderItem("Pizza", 2, 20000, "assets/bg-welcome2.jpg"),
+
                 ),
-              ),
+                const SizedBox(height: 20.0,),
+                OrderListItem(key,
+                OrderItem("Pizza", 2, 20000, "assets/bg-welcome2.jpg"),
+
+                ),
+
+              ],
             ),
-            SizedBox(height: 20.0),
-            Container(
-              width: double.infinity,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: TextField(
-                      style: TextStyle(
-                        color: Colors.white, // Set text color here
-                      ),
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.grey[200], // Set background color here
-                        hintText: "Search For Food",
-                        hintStyle: TextStyle(
-                          color: Colors.grey, // Set hint text color here
-                        ),
-                        prefixIcon: Icon(Icons.search, color: Colors.grey), // Set the color of the search icon
-                        suffixIcon: GestureDetector(
-                          onTap: () {
-                            // Add the functionality for the settings icon here
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => SettingsPage()),
-                            );
-                          },
-                          child: Icon(Icons.settings),
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                          borderSide: BorderSide.none,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 10.0),
-                  GestureDetector(
-                          onTap: () {
-                            // Add the functionality for the settings icon here
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => SettingsPage()),
-                            );
-                          },
-                          child: Icon(Icons.notifications),
-                        ),
-                ],
-              ),
-            ),
-            SizedBox(height: 20.0),
-            DropdownButton<String>(
-              value: 'Option 1                                                                                                                 ',
-              onChanged: (String? newValue) {},
-              items: <String>[
-                'Option 1                                                                                                                 ',
-                'Option 2',
-                'Option 3',
-                'Option 4'
-              ].map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              style: TextStyle(color: Colors.black), // Text color
-              dropdownColor: Colors.grey[200], // Background color
-              underline: Container(), // Remove default underline
-            ),
-            DropdownButton<String>(
-              value: 'Option 1                                                                                                                 ',
-              onChanged: (String? newValue) {},
-              items: <String>[
-                'Option 1                                                                                                                 ',
-                'Option 2',
-                'Option 3',
-                'Option 4'
-              ].map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              style: TextStyle(color: Colors.black), // Text color
-              dropdownColor: const Color.fromRGBO(238, 238, 238, 1), // Background color
-              underline: Container(), // Remove default underline
-            ),
-            DropdownButton<String>(
-              value: 'Option 1                                                                                                                 ',
-              onChanged: (String? newValue) {},
-              items: <String>[
-                'Option 1                                                                                                                 ',
-                'Option 2',
-                'Option 3',
-                'Option 4'
-              ].map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              style: TextStyle(color: Colors.black), // Text color
-              dropdownColor: Colors.grey[200], // Background color
-              underline: Container(), // Remove default underline
-            ),
-          ],
-        ),
-      ),
+          ),
+        ],
+      )
     );
+  
   }
+
 }
 
-class SettingsPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Settings"),
-      ),
-      body: Center(
-        child: Text("This is the Settings Page"),
-      ),
-    );
-  }
-}

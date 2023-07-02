@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.white,
       ),
-      initialRoute: '/',
+      initialRoute: '/homebar',
       routes: {
         '/': (context) => const LoadingScreen(),
         '/welcome': (context) => const OnboardingOneScreen(),
