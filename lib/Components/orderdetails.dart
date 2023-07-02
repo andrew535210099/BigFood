@@ -143,7 +143,42 @@ class OrderDetaill extends StatelessWidget {
                 OrderItem("Pizza", 2, 20000, "assets/bg-welcome2.jpg"),
 
                 ),
+                const SizedBox(height: 10.0,),
+                _buildDivider(),
+            
+                Row(
+                  children: [
+                    const SizedBox(width: 40.0,),
+                    Text("Ongkir"),
+                    Spacer(),
+                    Text("Rp berapa"),
 
+                  ],
+                ),
+                    const SizedBox(height: 10.0,),
+                    Row(
+                  children: [
+                    const SizedBox(width: 40.0,),
+                    Text("Ongkir"),
+                    Spacer(),
+                    Text("Rp berapa"),
+
+                  ],
+                ),
+                  const SizedBox(height: 20.0,),
+                _buildDivider(),
+                const SizedBox(height: 10.0,),
+                Row(
+                  children: [
+                    const SizedBox(width: 40.0,),
+                    Text("Total",),
+                    Spacer(),
+                    Text("Rp total"),
+                    const SizedBox(width: 20.0,),
+                  ],
+                ),
+                const SizedBox(height: 10.0,),
+                
               ],
             ),
           ),
@@ -152,6 +187,15 @@ class OrderDetaill extends StatelessWidget {
     );
   
   }
-
+    Container _buildDivider(){
+      return Container(
+        height: 2.0,
+        width: double.maxFinite,
+        decoration: BoxDecoration(
+          color: Colors.grey.shade400,
+          borderRadius: BorderRadius.circular(5.0),
+        ),
+      );
+    }
 }
 
