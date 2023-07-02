@@ -178,7 +178,15 @@ class OrderDetaill extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 10.0,),
-                
+                ElevatedButton(  
+                  onPressed: (){
+
+                  },
+                  style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                  ),
+                  child:
+                  Text("Checkout")),
               ],
             ),
           ),
