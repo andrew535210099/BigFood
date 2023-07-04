@@ -1,3 +1,4 @@
+import 'package:duds/UserData/userdata.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -157,6 +158,8 @@ class _HomePageState extends State<HomePage> {
         'mushroomSoupQuantity' : mushroomSoupQuantity,
       };
 
+
+
       // Memperbarui cart yang terkait dengan email pengguna
       QuerySnapshot existingCart =
           await cartRef.where('userEmail', isEqualTo: userEmail).get();
@@ -195,11 +198,27 @@ class _HomePageState extends State<HomePage> {
       // Mendapatkan email pengguna dari dokumen pengguna
       final userEmail = userProvider.getEmail();
 
-      // Membuat data produk untuk ditambahkan ke cart
-      Map<String, dynamic> productData = {
+    //   setState(() {
+    //   // Menggunakan Provider untuk menyimpan data quantity di seluruh aplikasi
+    //   final userData = Provider.of<UserData>(context, listen: false);
+    //   userData.updateQuantities(
+    //     zingerBurgerQuantity: zingerBurgerQuantity,
+    //     rollParathaQuantity: rollParathaQuantity,
+    //     burgerQuantity: burgerQuantity,
+    //     sandwichQuantity: sandwichQuantity,
+    //     pizzaRollQuantity: pizzaRollQuantity,
+    //     mushroomSoupQuantity: mushroomSoupQuantity,
+    //   );
+    // });
+
+    Map<String, dynamic> productData = {
         'userEmail': userEmail,
         'zingerBurgerQuantity': zingerBurgerQuantity,
         'rollParathaQuantity': rollParathaQuantity,
+        'burgerQuantity' : burgerQuantity,
+        'sandwichQuantity' : sandwichQuantity,
+        'pizzaRollQuantity' : pizzaRollQuantity,
+        'mushroomSoupQuantity' : mushroomSoupQuantity,
       };
 
       // Memeriksa apakah ada cart yang terkait dengan email pengguna

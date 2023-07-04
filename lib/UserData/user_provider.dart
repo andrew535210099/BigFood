@@ -1,3 +1,4 @@
+import 'package:duds/UserData/userdata.dart';
 import 'package:flutter/material.dart';
 import 'user_provider.dart';
 
@@ -6,6 +7,7 @@ class UserProvider with ChangeNotifier {
   String _email = '';
   String _username = '';
   String _password = '';
+  UserData _userData = UserData();
   
   String get username => _username;
   String get email => _email;
@@ -36,4 +38,9 @@ class UserProvider with ChangeNotifier {
   String getPassword(){
     return _password;
   }
+
+  UserData getUserData() {
+    return _userData;
+  }
+  
 }
