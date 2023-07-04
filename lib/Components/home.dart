@@ -7,12 +7,30 @@ import 'package:provider/provider.dart';
 import '../UserData/user_provider.dart';
 
 void main() {
-  runApp(HomePage());
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => UserProvider(),
+      child: MaterialApp(
+        title: 'Homepage',
+        theme: ThemeData(
+          primarySwatch: Colors.orange,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        debugShowCheckedModeBanner: false,
+        home: HomePage(),
+      ),
+    );
+  }
 }
 
 class HomePage extends StatefulWidget {
   @override
-  State<HomePage> createState() => _HomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
@@ -20,24 +38,21 @@ class _HomePageState extends State<HomePage> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   late User _user;
 
-  
-
-  void initState() {
-  super.initState();
-  WidgetsBinding.instance?.addPostFrameCallback((_) {
-    addToCart();
-  });
-}
-
-
   int zingerBurgerQuantity = 0;
   int rollParathaQuantity = 0;
-  int burgerQuantity = 0 ;
+  int burgerQuantity = 0;
   int sandwichQuantity = 0;
   int pizzaRollQuantity = 0;
   int mushroomSoupQuantity = 0;
 
-  
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      addToCart();
+    });
+  }
+
   void incrementBurger() {
     setState(() {
       burgerQuantity++;
@@ -54,7 +69,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void incrementSandwich(){
+  void incrementSandwich() {
     setState(() {
       sandwichQuantity++;
       updateCart();
@@ -70,7 +85,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void incrementPizzaRoll(){
+  void incrementPizzaRoll() {
     setState(() {
       pizzaRollQuantity++;
       updateCart();
@@ -86,7 +101,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void incrementmushroomSoup(){
+  void incrementmushroomSoup() {
     setState(() {
       mushroomSoupQuantity++;
       updateCart();
@@ -135,120 +150,59 @@ class _HomePageState extends State<HomePage> {
   }
 
   void updateCart() async {
-  _user = _auth.currentUser!;
-  final String userUID = _user.uid;
+    _user = _auth.currentUser!;
+    final String userUID = _user.uid;
 
-  try {
-    CollectionReference cartRef = _firestore.collection('carts');
-    // Mengambil dokumen pengguna berdasarkan UID
-    DocumentSnapshot userSnapshot =
-        await _firestore.collection('users').doc(userUID).get();
+    try {
+      CollectionReference cartRef = _firestore.collection('carts');
+      DocumentSnapshot userSnapshot =
+          await _firestore.collection('users').doc(userUID).get();
 
-    if (userSnapshot.exists) {
-      final userProvider = Provider.of<UserProvider>(context, listen: false);
-      final userEmail = userProvider.getEmail();
-
-      Map<String, dynamic> productData = {
-        'userEmail': userEmail,
-        'zingerBurgerQuantity': zingerBurgerQuantity,
-        'rollParathaQuantity': rollParathaQuantity,
-        'burgerQuantity' : burgerQuantity,
-        'sandwichQuantity' : sandwichQuantity,
-        'pizzaRollQuantity' : pizzaRollQuantity,
-        'mushroomSoupQuantity' : mushroomSoupQuantity,
-      };
-
-
-
-      // Memperbarui cart yang terkait dengan email pengguna
-      QuerySnapshot existingCart =
-          await cartRef.where('userEmail', isEqualTo: userEmail).get();
-
-      if (existingCart.docs.isNotEmpty) {
-        print('Masuk');
-        String cartDocId = existingCart.docs[0].id;
-        await cartRef.doc(cartDocId).update(productData);
+      if (userSnapshot.exists) {
+        await cartRef.doc(userUID).update({
+          'burgerQuantity': burgerQuantity,
+          'sandwichQuantity': sandwichQuantity,
+          'pizzaRollQuantity': pizzaRollQuantity,
+          'mushroomSoupQuantity': mushroomSoupQuantity,
+          'zingerBurgerQuantity': zingerBurgerQuantity,
+          'rollParathaQuantity': rollParathaQuantity,
+        });
       } else {
-        await cartRef.add(productData);
+        await cartRef.doc(userUID).set({
+          'burgerQuantity': burgerQuantity,
+          'sandwichQuantity': sandwichQuantity,
+          'pizzaRollQuantity': pizzaRollQuantity,
+          'mushroomSoupQuantity': mushroomSoupQuantity,
+          'zingerBurgerQuantity': zingerBurgerQuantity,
+          'rollParathaQuantity': rollParathaQuantity,
+        });
       }
+    } catch (e) {
+      print(e.toString());
     }
-  } catch (error) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Error occurred: $error')),
-    );
   }
-}
 
   void addToCart() async {
-  _user = _auth.currentUser!;
-  final String userUID = _user.uid;
+    _user = _auth.currentUser!;
+    final String userUID = _user.uid;
 
-  try {
-    // Mengambil referensi koleksi carts
-    CollectionReference cartRef = _firestore.collection('carts');
+    try {
+      CollectionReference cartRef = _firestore.collection('carts');
+      DocumentSnapshot cartSnapshot = await cartRef.doc(userUID).get();
 
-    // Mengambil dokumen pengguna berdasarkan UID
-    DocumentSnapshot userSnapshot = await _firestore.collection('users').doc(userUID).get();
-    
-    
-    if (userSnapshot.exists) {
-      final userData = userSnapshot.data() as Map<String, dynamic>;
-      final userProvider = Provider.of<UserProvider>(context, listen: false);
-
-      // Mendapatkan email pengguna dari dokumen pengguna
-      final userEmail = userProvider.getEmail();
-
-    //   setState(() {
-    //   // Menggunakan Provider untuk menyimpan data quantity di seluruh aplikasi
-    //   final userData = Provider.of<UserData>(context, listen: false);
-    //   userData.updateQuantities(
-    //     zingerBurgerQuantity: zingerBurgerQuantity,
-    //     rollParathaQuantity: rollParathaQuantity,
-    //     burgerQuantity: burgerQuantity,
-    //     sandwichQuantity: sandwichQuantity,
-    //     pizzaRollQuantity: pizzaRollQuantity,
-    //     mushroomSoupQuantity: mushroomSoupQuantity,
-    //   );
-    // });
-
-    Map<String, dynamic> productData = {
-        'userEmail': userEmail,
-        'zingerBurgerQuantity': zingerBurgerQuantity,
-        'rollParathaQuantity': rollParathaQuantity,
-        'burgerQuantity' : burgerQuantity,
-        'sandwichQuantity' : sandwichQuantity,
-        'pizzaRollQuantity' : pizzaRollQuantity,
-        'mushroomSoupQuantity' : mushroomSoupQuantity,
-      };
-
-      // Memeriksa apakah ada cart yang terkait dengan email pengguna
-      QuerySnapshot existingCart = await cartRef.where('userEmail', isEqualTo: userEmail).get();
-      
-      if (existingCart.docs.isNotEmpty) {
-        // Jika cart sudah ada, perbarui dokumennya
-        String cartDocId = existingCart.docs[0].id;
-        await cartRef.doc(cartDocId).update(productData);
-      } else {
-        // Jika cart belum ada, tambahkan dokumen baru
-        await cartRef.add(productData);
+      if (cartSnapshot.exists) {
+        Map<String, dynamic> cartData = cartSnapshot.data() as Map<String, dynamic>;
+        burgerQuantity = cartData['burgerQuantity'] ?? 0;
+        sandwichQuantity = cartData['sandwichQuantity'] ?? 0;
+        pizzaRollQuantity = cartData['pizzaRollQuantity'] ?? 0;
+        mushroomSoupQuantity = cartData['mushroomSoupQuantity'] ?? 0;
+        zingerBurgerQuantity = cartData['zingerBurgerQuantity'] ?? 0;
+        rollParathaQuantity = cartData['rollParathaQuantity'] ?? 0;
       }
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Product added to cart.')),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('User document not found.')),
-      );
+    } catch (e) {
+      print(e.toString());
     }
-  } catch (error) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Error occurred: $error')),
-    );
   }
-}
-
-
 
   @override
   Widget build(BuildContext context) {
