@@ -157,6 +157,7 @@ class _HomePageState extends State<HomePage> {
             SliverPadding(
               padding: const EdgeInsets.all(20),
               sliver: SliverGrid.count(
+                childAspectRatio: (1 / 1.4),
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
                 crossAxisCount: 2,
@@ -169,8 +170,6 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Image.asset(
                           'assets/zingerBurger.png',
-                          height:120,
-                          width: 120,
                           fit: BoxFit.contain,
                         ),
                         Text(
@@ -184,7 +183,7 @@ class _HomePageState extends State<HomePage> {
                         Text(
                           "Rp 20.000",
                           style: TextStyle(
-                            fontSize: 15.0,
+                            fontSize: 17.0,
                             fontWeight: FontWeight.bold,
                             color: Color.fromARGB(255, 255, 100, 64),
                           ),
@@ -220,8 +219,6 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       children: [
                         Image.asset(
-                          height:120,
-                          width: 120,
                           'assets/rollParatha.png',
                           fit: BoxFit.contain,
                         ),
@@ -236,7 +233,7 @@ class _HomePageState extends State<HomePage> {
                         Text(
                           "Rp 25.000",
                           style: TextStyle(
-                            fontSize: 15.0,
+                            fontSize: 17.0,
                             fontWeight: FontWeight.bold,
                             color: Color.fromARGB(255, 255, 100, 64),
                           ),
@@ -281,7 +278,7 @@ class _HomePageState extends State<HomePage> {
               ),
                             Text("Rp 15.000",
               style:TextStyle(
-                      fontSize: 15.0,
+                      fontSize: 17.0,
                       fontWeight: FontWeight.bold,
                       color: Color.fromARGB(255, 255, 100, 64),
                     ),
@@ -307,7 +304,7 @@ class _HomePageState extends State<HomePage> {
               ),
                             Text("Rp 20.000",
               style:TextStyle(
-                      fontSize: 15.0,
+                      fontSize: 17.0,
                       fontWeight: FontWeight.bold,
                       color: Color.fromARGB(255, 255, 100, 64),
                     ),
@@ -333,7 +330,7 @@ class _HomePageState extends State<HomePage> {
               ),
                             Text("Rp 22.000",
               style:TextStyle(
-                      fontSize: 15.0,
+                      fontSize: 17.0,
                       fontWeight: FontWeight.bold,
                       color: Color.fromARGB(255, 255, 100, 64),
                     ),
@@ -359,7 +356,7 @@ class _HomePageState extends State<HomePage> {
               ),
                             Text("Rp 17.000",
               style:TextStyle(
-                      fontSize: 15.0,
+                      fontSize: 17.0,
                       fontWeight: FontWeight.bold,
                       color: Color.fromARGB(255, 255, 100, 64),
                     ),
@@ -394,7 +391,7 @@ SliverPadding(
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
         crossAxisCount: 2,
-      
+        childAspectRatio: (1 / 1.4),
         children: <Widget>[
           // Zinger Burger
           Container(
@@ -414,7 +411,7 @@ SliverPadding(
               ),
                             Text("Rp 20.000",
               style:TextStyle(
-                      fontSize: 15.0,
+                      fontSize: 17.0,
                       fontWeight: FontWeight.bold,
                       color: Color.fromARGB(255, 255, 100, 64),
                     ),
@@ -440,7 +437,7 @@ SliverPadding(
               ),
                             Text("Rp 25.000",
               style:TextStyle(
-                      fontSize: 15.0,
+                      fontSize: 17.0,
                       fontWeight: FontWeight.bold,
                       color: Color.fromARGB(255, 255, 100, 64),
                     ),
@@ -465,7 +462,7 @@ SliverPadding(
               ),
                             Text("Rp 15.000",
               style:TextStyle(
-                      fontSize: 15.0,
+                      fontSize: 17.0,
                       fontWeight: FontWeight.bold,
                       color: Color.fromARGB(255, 255, 100, 64),
                     ),
@@ -491,7 +488,7 @@ SliverPadding(
               ),
                             Text("Rp 20.000",
               style:TextStyle(
-                      fontSize: 15.0,
+                      fontSize: 17.0,
                       fontWeight: FontWeight.bold,
                       color: Color.fromARGB(255, 255, 100, 64),
                     ),
@@ -517,7 +514,7 @@ SliverPadding(
               ),
                             Text("Rp 22.000",
               style:TextStyle(
-                      fontSize: 15.0,
+                      fontSize: 17.0,
                       fontWeight: FontWeight.bold,
                       color: Color.fromARGB(255, 255, 100, 64),
                     ),
@@ -543,7 +540,7 @@ SliverPadding(
               ),
                             Text("Rp 17.000",
               style:TextStyle(
-                      fontSize: 15.0,
+                      fontSize: 17.0,
                       fontWeight: FontWeight.bold,
                       color: Color.fromARGB(255, 255, 100, 64),
                     ),
