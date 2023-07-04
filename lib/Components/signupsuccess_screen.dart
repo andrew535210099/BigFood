@@ -58,7 +58,7 @@ class SignUpSuccessPage extends StatelessWidget {
                     padding: EdgeInsets.only(bottom: 16.0),
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/homepage');
+                        Navigator.pushNamed(context, '/homebar');
                       },
                       style: ElevatedButton.styleFrom(
                       primary: Color(int.parse('FF6440', radix: 16)).withOpacity(1.0),
