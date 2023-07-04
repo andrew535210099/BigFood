@@ -19,6 +19,8 @@ class _HomePageState extends State<HomePage> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   late User _user;
 
+  
+
   void initState(){
     super.initState();
     addToCart();
@@ -26,6 +28,67 @@ class _HomePageState extends State<HomePage> {
 
   int zingerBurgerQuantity = 0;
   int rollParathaQuantity = 0;
+  int burgerQuantity = 0 ;
+  int sandwichQuantity = 0;
+  int pizzaRollQuantity = 0;
+  int mushroomSoupQuantity = 0;
+
+  
+  void incrementBurger() {
+    setState(() {
+      burgerQuantity++;
+    });
+  }
+
+  void decrementBurger() {
+    setState(() {
+      if (burgerQuantity > 0) {
+        burgerQuantity--;
+      }
+    });
+  }
+
+  void incrementSandwich(){
+    setState(() {
+      sandwichQuantity++;
+    });
+  }
+
+  void decrementSandwich() {
+    setState(() {
+      if (sandwichQuantity > 0) {
+        sandwichQuantity--;
+      }
+    });
+  }
+
+  void incrementPizzaRoll(){
+    setState(() {
+      pizzaRollQuantity++;
+    });
+  }
+
+  void decrementPizzaRoll() {
+    setState(() {
+      if (pizzaRollQuantity > 0) {
+        pizzaRollQuantity--;
+      }
+    });
+  }
+
+  void incrementmushroomSoup(){
+    setState(() {
+      mushroomSoupQuantity++;
+    });
+  }
+
+  void decrementmushroomSoup() {
+    setState(() {
+      if (mushroomSoupQuantity > 0) {
+        mushroomSoupQuantity--;
+      }
+    });
+  }
 
   void incrementZingerBurgerQuantity() {
     setState(() {
@@ -54,6 +117,8 @@ class _HomePageState extends State<HomePage> {
       }
     });
   }
+
+  
 
   void addToCart() async {
   _user = _auth.currentUser!;
@@ -269,6 +334,8 @@ class _HomePageState extends State<HomePage> {
             color: const Color.fromARGB(255, 255, 238, 218),
             child: Column(children: [
                   Image.asset(
+                    height:120,
+                          width: 120,
                     'assets/burger.png',
                     fit: BoxFit.contain,
                   ),
@@ -286,7 +353,26 @@ class _HomePageState extends State<HomePage> {
                       color: Color.fromARGB(255, 255, 100, 64),
                     ),
               ),
-
+Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.remove),
+                              onPressed: decrementBurger,
+                            ),
+                            Text(
+                              burgerQuantity.toString(),
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.add),
+                              onPressed: incrementBurger,
+                            ),
+                          ],
+                        ),
             ],),
           ),
         // Sandwich
@@ -295,6 +381,8 @@ class _HomePageState extends State<HomePage> {
             color: const Color.fromARGB(255, 255, 238, 218),
             child: Column(children: [
                   Image.asset(
+                    height:120,
+                          width: 120,
                     'assets/sandwich.png',
                     fit: BoxFit.contain,
                   ),
@@ -312,7 +400,26 @@ class _HomePageState extends State<HomePage> {
                       color: Color.fromARGB(255, 255, 100, 64),
                     ),
               ),
-
+Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.remove),
+                              onPressed: decrementSandwich,
+                            ),
+                            Text(
+                              sandwichQuantity.toString(),
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.add),
+                              onPressed: incrementSandwich,
+                            ),
+                          ],
+                        ),
             ],),
           ),
 
@@ -321,6 +428,8 @@ class _HomePageState extends State<HomePage> {
             color: const Color.fromARGB(255, 255, 238, 218),
             child: Column(children: [
                   Image.asset(
+                    height:120,
+                          width: 120,
                     'assets/pizzaRoll.png',
                     fit: BoxFit.contain,
                   ),
@@ -338,7 +447,26 @@ class _HomePageState extends State<HomePage> {
                       color: Color.fromARGB(255, 255, 100, 64),
                     ),
               ),
-
+              Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.remove),
+                              onPressed: decrementPizzaRoll,
+                            ),
+                            Text(
+                              pizzaRollQuantity.toString(),
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.add),
+                              onPressed: incrementPizzaRoll,
+                            ),
+                          ],
+                        ),
             ],),
           ),
 
@@ -347,6 +475,8 @@ class _HomePageState extends State<HomePage> {
             color: const Color.fromARGB(255, 255, 238, 218),
             child: Column(children: [
                   Image.asset(
+                    height:120,
+                          width: 120,
                     'assets/mushroomSoup.png',
                     fit: BoxFit.contain,
                   ),
@@ -364,7 +494,26 @@ class _HomePageState extends State<HomePage> {
                       color: Color.fromARGB(255, 255, 100, 64),
                     ),
               ),
-
+              Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.remove),
+                              onPressed: decrementmushroomSoup,
+                            ),
+                            Text(
+                              mushroomSoupQuantity.toString(),
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.add),
+                              onPressed: incrementmushroomSoup,
+                            ),
+                          ],
+                        ),
             ],),
           ),
         ],
@@ -402,6 +551,8 @@ SliverPadding(
             color: const Color.fromARGB(255, 255, 238, 218),
             child: Column(children: [
                   Image.asset(
+                    height:120,
+                          width: 120,
                     'assets/zingerBurger.png',
                     fit: BoxFit.contain,
                   ),
@@ -428,6 +579,8 @@ SliverPadding(
             color: const Color.fromARGB(255, 255, 238, 218),
             child: Column(children: [
                   Image.asset(
+                    height:120,
+                          width: 120,
                     'assets/rollParatha.png',
                     fit: BoxFit.contain,
                   ),
@@ -453,6 +606,8 @@ SliverPadding(
             color: const Color.fromARGB(255, 255, 238, 218),
             child: Column(children: [
                   Image.asset(
+                    height:120,
+                          width: 120,
                     'assets/burger.png',
                     fit: BoxFit.contain,
                   ),
@@ -479,6 +634,8 @@ SliverPadding(
             color: const Color.fromARGB(255, 255, 238, 218),
             child: Column(children: [
                   Image.asset(
+                    height:120,
+                          width: 120,
                     'assets/sandwich.png',
                     fit: BoxFit.contain,
                   ),
@@ -505,6 +662,8 @@ SliverPadding(
             color: const Color.fromARGB(255, 255, 238, 218),
             child: Column(children: [
                   Image.asset(
+                    height:120,
+                          width: 120,
                     'assets/pizzaRoll.png',
                     fit: BoxFit.contain,
                   ),
@@ -531,6 +690,8 @@ SliverPadding(
             color: const Color.fromARGB(255, 255, 238, 218),
             child: Column(children: [
                   Image.asset(
+                    height:120,
+                          width: 120,
                     'assets/mushroomSoup.png',
                     fit: BoxFit.contain,
                   ),
