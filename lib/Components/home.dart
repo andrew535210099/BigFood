@@ -21,10 +21,13 @@ class _HomePageState extends State<HomePage> {
 
   
 
-  void initState(){
-    super.initState();
+  void initState() {
+  super.initState();
+  WidgetsBinding.instance?.addPostFrameCallback((_) {
     addToCart();
-  }
+  });
+}
+
 
   int zingerBurgerQuantity = 0;
   int rollParathaQuantity = 0;
@@ -37,6 +40,7 @@ class _HomePageState extends State<HomePage> {
   void incrementBurger() {
     setState(() {
       burgerQuantity++;
+      updateCart();
     });
   }
 
@@ -44,6 +48,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       if (burgerQuantity > 0) {
         burgerQuantity--;
+        updateCart();
       }
     });
   }
@@ -93,6 +98,7 @@ class _HomePageState extends State<HomePage> {
   void incrementZingerBurgerQuantity() {
     setState(() {
       zingerBurgerQuantity++;
+      updateCart();
     });
   }
 
@@ -100,6 +106,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       if (zingerBurgerQuantity > 0) {
         zingerBurgerQuantity--;
+        updateCart();
       }
     });
   }
@@ -118,7 +125,45 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  
+  void updateCart() async {
+  _user = _auth.currentUser!;
+  final String userUID = _user.uid;
+
+  try {
+    CollectionReference cartRef = _firestore.collection('carts');
+    // Mengambil dokumen pengguna berdasarkan UID
+    DocumentSnapshot userSnapshot =
+        await _firestore.collection('users').doc(userUID).get();
+
+    if (userSnapshot.exists) {
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      final userEmail = userProvider.getEmail();
+
+      Map<String, dynamic> productData = {
+        'userEmail': userEmail,
+        'zingerBurgerQuantity': zingerBurgerQuantity,
+        'rollParathaQuantity': rollParathaQuantity,
+        
+      };
+
+      // Memperbarui cart yang terkait dengan email pengguna
+      QuerySnapshot existingCart =
+          await cartRef.where('userEmail', isEqualTo: userEmail).get();
+
+      if (existingCart.docs.isNotEmpty) {
+        print('Masuk');
+        String cartDocId = existingCart.docs[0].id;
+        await cartRef.doc(cartDocId).update(productData);
+      } else {
+        await cartRef.add(productData);
+      }
+    }
+  } catch (error) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Error occurred: $error')),
+    );
+  }
+}
 
   void addToCart() async {
   _user = _auth.currentUser!;
@@ -540,7 +585,7 @@ SliverPadding(
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
         crossAxisCount: 2,
-        childAspectRatio: (1 / 1.4),
+        childAspectRatio: (1 / 1.1),
         children: <Widget>[
           // Zinger Burger
           Container(
