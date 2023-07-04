@@ -56,6 +56,7 @@ class _HomePageState extends State<HomePage> {
   void incrementSandwich(){
     setState(() {
       sandwichQuantity++;
+      updateCart();
     });
   }
 
@@ -63,6 +64,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       if (sandwichQuantity > 0) {
         sandwichQuantity--;
+        updateCart();
       }
     });
   }
@@ -70,6 +72,7 @@ class _HomePageState extends State<HomePage> {
   void incrementPizzaRoll(){
     setState(() {
       pizzaRollQuantity++;
+      updateCart();
     });
   }
 
@@ -77,6 +80,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       if (pizzaRollQuantity > 0) {
         pizzaRollQuantity--;
+        updateCart();
       }
     });
   }
@@ -84,6 +88,7 @@ class _HomePageState extends State<HomePage> {
   void incrementmushroomSoup(){
     setState(() {
       mushroomSoupQuantity++;
+      updateCart();
     });
   }
 
@@ -91,6 +96,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       if (mushroomSoupQuantity > 0) {
         mushroomSoupQuantity--;
+        updateCart();
       }
     });
   }
@@ -114,6 +120,7 @@ class _HomePageState extends State<HomePage> {
   void incrementRollParathaQuantity() {
     setState(() {
       rollParathaQuantity++;
+      updateCart();
     });
   }
 
@@ -121,6 +128,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       if (rollParathaQuantity > 0) {
         rollParathaQuantity--;
+        updateCart();
       }
     });
   }
@@ -143,7 +151,10 @@ class _HomePageState extends State<HomePage> {
         'userEmail': userEmail,
         'zingerBurgerQuantity': zingerBurgerQuantity,
         'rollParathaQuantity': rollParathaQuantity,
-        
+        'burgerQuantity' : burgerQuantity,
+        'sandwichQuantity' : sandwichQuantity,
+        'pizzaRollQuantity' : pizzaRollQuantity,
+        'mushroomSoupQuantity' : mushroomSoupQuantity,
       };
 
       // Memperbarui cart yang terkait dengan email pengguna
