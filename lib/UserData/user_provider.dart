@@ -7,6 +7,12 @@ class UserProvider with ChangeNotifier {
   String _email = '';
   String _username = '';
   String _password = '';
+  int _a = 0;
+  int _b = 0;
+  int _c = 0;
+  int _d = 0;
+  int _e = 0;
+  int _f = 0;
   UserData _userData = UserData();
   
   String get username => _username;
@@ -16,6 +22,16 @@ class UserProvider with ChangeNotifier {
   void setEmail(String email) {
     _email = email;
     notifyListeners();
+  }
+
+  void setValueCart(int a){
+    _a = a;
+    notifyListeners();
+  }
+
+  int getValueCart(){
+    return _a;
+
   }
 
   void setUsername(String username){
@@ -42,5 +58,25 @@ class UserProvider with ChangeNotifier {
   UserData getUserData() {
     return _userData;
   }
+
+  final Map<String, int> _cartData = {
+    'burgerQuantity' : 0,
+    'zingerBurgerQuantity' :0,
+    'rollParathaQuantity' : 0,
+    'sandwichQuantity': 0,
+    'pizzaRollQuantity': 0, 
+    'mushroomSoupQuantity': 0,
+    
+  };
+
+  Map<String, int> get cartData => _cartData;
+
+  void updateCartData(Map<String, int> data) {
+    _cartData.clear();
+    _cartData.addAll(data);
+    notifyListeners();
+  }
+
   
+
 }

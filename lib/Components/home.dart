@@ -50,6 +50,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     WidgetsBinding.instance?.addPostFrameCallback((_) {
       addToCart();
+      fetchData(context);
     });
   }
 
@@ -217,6 +218,55 @@ void addToCart() async {
   }
 }
 
+
+  void fetchData(BuildContext context) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final Map<String, int> cartData = userProvider.cartData;
+
+    try {
+      // Ambil instance FirebaseAuth
+      final FirebaseAuth auth = FirebaseAuth.instance;
+      // Ambil user saat ini
+      final User? user = auth.currentUser;
+      
+      if (user != null) {
+        final String userUID = user.uid;
+        final String userEmail = user.email!; // Ambil email pengguna
+
+        // Melakukan query ke database untuk mengambil data cart
+        final DocumentSnapshot cartSnapshot = await FirebaseFirestore.instance
+            .collection('carts')
+            .doc(userUID)
+            .get()
+            ;
+
+        if (cartSnapshot.exists) {
+          final Map<String, dynamic> cartData = cartSnapshot.data() as Map<String, dynamic>;
+          // Ambil data cart yang diinginkan
+          final int burgerQuantity = cartData['burgerQuantity'] ?? 0;
+          final int sandwichQuantity = cartData['sandwichQuantity'] ?? 0;
+          final int pizzaRollQuantity = cartData['pizzaRollQuantity'] ?? 0;
+          final int mushroomSoupQuantity = cartData['mushroomSoupQuantity'] ?? 0;
+          final int zingerBurgerQuantity = cartData['zingerBurgerQuantity'] ?? 0;
+          final int rollParathaQuantity = cartData['rollParathaQuantity'] ?? 0;
+          userProvider.setValueCart(burgerQuantity);
+
+          // Lakukan sesuatu dengan data yang telah diambil
+          print('Burger Quantity: $burgerQuantity');
+          print('Sandwich Quantity: $sandwichQuantity');
+          print('Pizza Roll Quantity: $pizzaRollQuantity');
+          print('Mushroom Soup Quantity: $mushroomSoupQuantity');
+          print('Zinger Burger Quantity: $zingerBurgerQuantity');
+          print('Roll Paratha Quantity: $rollParathaQuantity');
+
+        } else {
+          print('Cart does not exist');
+        }
+      }
+    } catch (e) {
+      print('Error fetching cart data: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
