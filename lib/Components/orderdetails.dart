@@ -50,56 +50,57 @@ class OrderListItem extends StatelessWidget {
           children: [
             Text(item.title,
                 style: TextStyle(
-                fontSize: 15.0,
+                fontSize: 20.0,
                 fontWeight: FontWeight.bold,
                 color: Color.fromARGB(255, 0, 0, 0),
               ),
             
             ),
             const SizedBox(height: 5.0,),
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.grey,
-                  width: 1.0,
-                ),
-                borderRadius: BorderRadius.circular(5.0),
+              Text("${item.qty}",
+                  style: TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 0, 0, 0),
+                    )),
+            // Container(
+            //   decoration: BoxDecoration(
+            //     border: Border.all(
+            //       color: Colors.grey,
+            //       width: 1.0,
+            //     ),
+            //     borderRadius: BorderRadius.circular(5.0),
 
-              ),
-              child: Row(
-                children: [
-                  IconButton(
-                    padding: const EdgeInsets.all(4.0),
-                  icon: Icon(Icons.minimize),
-                  onPressed: (){
+            //   ),
+            //   child: Row(
+            //     children: [
+            //       // IconButton(
+            //       //   padding: const EdgeInsets.all(4.0),
+            //       // icon: Icon(Icons.minimize),
+            //       // onPressed: (){
 
-                  },
+            //       // },
 
-                  ),
-                  Text("${item.qty}",
-                //   style: TextStyle(
-                // fontSize: 15.0,
-                // fontWeight: FontWeight.bold,
-                // color: Color.fromARGB(255, 0, 0, 0),
-                    ),
-                  IconButton(
-                  padding: const EdgeInsets.all(4.0),
-                  icon: Icon(Icons.add),
-                  onPressed: (){
+            //       // ),
+
+            //       // IconButton(
+            //       // padding: const EdgeInsets.all(4.0),
+            //       // icon: Icon(Icons.add),
+            //       // onPressed: (){
                     
-                  },
+            //       // },
 
-                  )
-                ],
-              ),
-            ),
+            //       // )
+            //     ],
+            //   ),
+            // ),
           ],
         ),
       ),
       const SizedBox(width: 10.0,),
       Text("${item.price * item.qty}",
                 style: TextStyle(
-                fontSize: 15.0,
+                fontSize: 16.0,
                 fontWeight: FontWeight.bold,
                 color: Color.fromARGB(255, 0, 0, 0),
               ),
@@ -124,12 +125,12 @@ class OrderDetaill extends StatelessWidget {
           //   width: 100,
           // ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(20.0),
             child: ListView(
               children: [
                 Text("Order Detail",
                     style: TextStyle(
-                fontSize: 20.0,
+                fontSize: 32.0,
                 fontWeight: FontWeight.bold,
                 color: Color.fromARGB(255, 0, 0, 0),
               ),),
@@ -145,23 +146,53 @@ class OrderDetaill extends StatelessWidget {
                 ),
                 const SizedBox(height: 10.0,),
                 _buildDivider(),
-            
-                Row(
+            const SizedBox(height: 10.0,),
+                Container(
+ padding: const EdgeInsets.all(20.0),
+                  decoration: BoxDecoration(
+    // color: const Color(0xff7c94b6),
+    border: Border.all(
+      width: 1,
+    ),
+    borderRadius: BorderRadius.circular(12),
+  ),
+                  child: Column(
+                    children: [
+                    Row(
                   children: [
-                    const SizedBox(width: 40.0,),
-                    Text("Ongkir"),
+                    // const SizedBox(width: 40.0,),
+                    Text("Ongkir",
+                    style: TextStyle(
+                fontSize: 16.0,
+        
+                color: Color.fromARGB(255, 0, 0, 0),
+              ),),
                     Spacer(),
-                    Text("Rp berapa"),
+                    Text("Rp berapa",
+                    style: TextStyle(
+                fontSize: 16.0,
+              
+                color: Color.fromARGB(255, 0, 0, 0),
+              ),),
 
                   ],
                 ),
                     const SizedBox(height: 10.0,),
                     Row(
                   children: [
-                    const SizedBox(width: 40.0,),
-                    Text("Ongkir"),
+                    // const SizedBox(width: 40.0,),
+                    Text("Ongkir",
+                    style: TextStyle(
+                fontSize: 16.0,
+                color: Color.fromARGB(255, 0, 0, 0),
+              ),),
                     Spacer(),
-                    Text("Rp berapa"),
+                    Text("Rp berapa",
+                    style: TextStyle(
+                fontSize: 16.0,
+              
+                color: Color.fromARGB(255, 0, 0, 0),
+              ),),
 
                   ],
                 ),
@@ -170,10 +201,18 @@ class OrderDetaill extends StatelessWidget {
                 const SizedBox(height: 10.0,),
                 Row(
                   children: [
-                    const SizedBox(width: 40.0,),
-                    Text("Total",),
+                    // const SizedBox(width: 40.0,),
+                    Text("Total",                    style: TextStyle(
+                fontSize: 16.0, fontWeight: FontWeight.bold,
+              
+                color: Color.fromARGB(255, 0, 0, 0),
+              ),),
                     Spacer(),
-                    Text("Rp total"),
+                    Text("Rp total"           ,         style: TextStyle(
+                fontSize: 16.0, fontWeight: FontWeight.bold,
+              
+                color: Color.fromARGB(255, 0, 0, 0),
+              ),),
                     const SizedBox(width: 20.0,),
                   ],
                 ),
@@ -186,7 +225,14 @@ class OrderDetaill extends StatelessWidget {
                   backgroundColor: Colors.green,
                   ),
                   child:
-                  Text("Checkout")),
+                  Text("Checkout"        ,            style: TextStyle(
+                fontSize: 17.0,
+              
+                
+              ),)),
+                    ],
+                  ),
+                )
               ],
             ),
           ),

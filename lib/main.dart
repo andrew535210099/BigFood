@@ -23,6 +23,7 @@ import 'Components/uploadphoto_screen.dart';
 import 'Components/signup_process_screen.dart';
 import 'Components/signup_screen.dart';
 import 'Components/verificationcode_screen.dart';
+import 'Components/orderdetails.dart';
 import 'Components/viamethod_screen.dart';
 import 'Components/home.dart';
 import 'Components/homebar.dart';
@@ -56,7 +57,7 @@ class MyApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.white,
       ),
-      initialRoute: '/homebar',
+      initialRoute: '/orderdetails',
       routes: {
         '/': (context) => const LoadingScreen(),
         '/welcome': (context) => const OnboardingOneScreen(),
@@ -80,6 +81,7 @@ class MyApp extends StatelessWidget {
         '/deleteaccount' : (context) => const DeleteAccount(),
         '/filter' : (context) => FilterScreenPage(),
         '/chat' : (context) => Chat(),
+        '/orderdetails' : (context) => OrderDetail(),
         '/profilepage' : (context) => ProfilePage(),
         '/cartScreen' : (context) => CartScreen(),
       },

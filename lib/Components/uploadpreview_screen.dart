@@ -159,12 +159,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                             ),
                             SizedBox(height: 10),
-                            Text(
-                              'Nomor Telepon',
-                              style: TextStyle(
-                                fontSize: 18.0,
-                              ),
-                            ),
+                            // Text(
+                            //   'Nomor Telepon',
+                            //   style: TextStyle(
+                            //     fontSize: 18.0,
+                            //   ),
+                            // ),
                           ],
                         ),
                       ],
