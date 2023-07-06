@@ -149,60 +149,74 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void updateCart() async {
-    _user = _auth.currentUser!;
-    final String userUID = _user.uid;
+void updateCart() async {
+  _user = _auth.currentUser!;
+  final String userUID = _user.uid;
+  final String userEmail = _user.email!; // Ambil email pengguna
 
-    try {
-      CollectionReference cartRef = _firestore.collection('carts');
-      DocumentSnapshot userSnapshot =
-          await _firestore.collection('users').doc(userUID).get();
+  try {
+    CollectionReference cartRef = _firestore.collection('carts');
+    DocumentSnapshot userSnapshot = await _firestore.collection('users').doc(userUID).get();
 
-      if (userSnapshot.exists) {
-        await cartRef.doc(userUID).update({
-          'burgerQuantity': burgerQuantity,
-          'sandwichQuantity': sandwichQuantity,
-          'pizzaRollQuantity': pizzaRollQuantity,
-          'mushroomSoupQuantity': mushroomSoupQuantity,
-          'zingerBurgerQuantity': zingerBurgerQuantity,
-          'rollParathaQuantity': rollParathaQuantity,
-        });
-      } else {
-        await cartRef.doc(userUID).set({
-          'burgerQuantity': burgerQuantity,
-          'sandwichQuantity': sandwichQuantity,
-          'pizzaRollQuantity': pizzaRollQuantity,
-          'mushroomSoupQuantity': mushroomSoupQuantity,
-          'zingerBurgerQuantity': zingerBurgerQuantity,
-          'rollParathaQuantity': rollParathaQuantity,
-        });
-      }
-    } catch (e) {
-      print(e.toString());
+    if (userSnapshot.exists) {
+      await cartRef.doc(userUID).update({
+        'email': userEmail, // Simpan email pengguna di dokumen keranjang
+        'burgerQuantity': burgerQuantity,
+        'sandwichQuantity': sandwichQuantity,
+        'pizzaRollQuantity': pizzaRollQuantity,
+        'mushroomSoupQuantity': mushroomSoupQuantity,
+        'zingerBurgerQuantity': zingerBurgerQuantity,
+        'rollParathaQuantity': rollParathaQuantity,
+      });
+    } else {
+      await cartRef.doc(userUID).set({
+        'email': userEmail, // Simpan email pengguna di dokumen keranjang
+        'burgerQuantity': burgerQuantity,
+        'sandwichQuantity': sandwichQuantity,
+        'pizzaRollQuantity': pizzaRollQuantity,
+        'mushroomSoupQuantity': mushroomSoupQuantity,
+        'zingerBurgerQuantity': zingerBurgerQuantity,
+        'rollParathaQuantity': rollParathaQuantity,
+      });
     }
+  } catch (e) {
+    print(e.toString());
   }
+}
 
-  void addToCart() async {
-    _user = _auth.currentUser!;
-    final String userUID = _user.uid;
+void addToCart() async {
+  _user = _auth.currentUser!;
+  final String userUID = _user.uid;
+  final String userEmail = _user.email!; // Ambil email pengguna
 
-    try {
-      CollectionReference cartRef = _firestore.collection('carts');
-      DocumentSnapshot cartSnapshot = await cartRef.doc(userUID).get();
+  try {
+    CollectionReference cartRef = _firestore.collection('carts');
+    DocumentSnapshot cartSnapshot = await cartRef.doc(userUID).get();
 
-      if (cartSnapshot.exists) {
-        Map<String, dynamic> cartData = cartSnapshot.data() as Map<String, dynamic>;
-        burgerQuantity = cartData['burgerQuantity'] ?? 0;
-        sandwichQuantity = cartData['sandwichQuantity'] ?? 0;
-        pizzaRollQuantity = cartData['pizzaRollQuantity'] ?? 0;
-        mushroomSoupQuantity = cartData['mushroomSoupQuantity'] ?? 0;
-        zingerBurgerQuantity = cartData['zingerBurgerQuantity'] ?? 0;
-        rollParathaQuantity = cartData['rollParathaQuantity'] ?? 0;
-      }
-    } catch (e) {
-      print(e.toString());
+    if (cartSnapshot.exists) {
+      Map<String, dynamic> cartData = cartSnapshot.data() as Map<String, dynamic>;
+      burgerQuantity = cartData['burgerQuantity'] ?? 0;
+      sandwichQuantity = cartData['sandwichQuantity'] ?? 0;
+      pizzaRollQuantity = cartData['pizzaRollQuantity'] ?? 0;
+      mushroomSoupQuantity = cartData['mushroomSoupQuantity'] ?? 0;
+      zingerBurgerQuantity = cartData['zingerBurgerQuantity'] ?? 0;
+      rollParathaQuantity = cartData['rollParathaQuantity'] ?? 0;
+    } else {
+      await cartRef.doc(userUID).set({
+        'email': userEmail, // Simpan email pengguna di dokumen keranjang
+        'burgerQuantity': burgerQuantity,
+        'sandwichQuantity': sandwichQuantity,
+        'pizzaRollQuantity': pizzaRollQuantity,
+        'mushroomSoupQuantity': mushroomSoupQuantity,
+        'zingerBurgerQuantity': zingerBurgerQuantity,
+        'rollParathaQuantity': rollParathaQuantity,
+      });
     }
+  } catch (e) {
+    print(e.toString());
   }
+}
+
 
   @override
   Widget build(BuildContext context) {
