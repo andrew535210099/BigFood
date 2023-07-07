@@ -24,8 +24,9 @@ class _LoginScreenState extends State<LoginScreen> {
   void login(BuildContext context) async {
   final email = _emailController.text;
   final password = hashPassword(_passwordController.text);
+  final password1 = _passwordController.text;
 
-  if (email.isEmpty || password.isEmpty) {
+  if (email.isEmpty || password.isEmpty || password1.isEmpty) {
     print('Please fill in all fields');
     return;
   }
@@ -58,7 +59,32 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     }
   } catch (error) {
-    print('Error logging in: $error');
+    final userCredential =
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: email,
+      password: password1,
+    );
+
+    if (userCredential.user != null) {
+      final user = _auth.currentUser;
+      final email = user?.email;
+
+      if (email != null) {
+        final userSnapshot =
+            await db.collection('users').doc(user!.uid).get();
+        final username = userSnapshot.get('username');
+        final email = userSnapshot.get('email');
+
+        // Set the username in the userProvider
+        final userProvider = Provider.of<UserProvider>(context, listen: false);
+        userProvider.setUsername(username);
+        userProvider.setEmail(email);
+        // Proceed with navigation
+        Navigator.pushReplacementNamed(context, '/homebar');
+        print('User $username logged in at ${DateTime.now()}');
+        print('Login successful');
+      }
+    }
     // Handle error
   }
 }
