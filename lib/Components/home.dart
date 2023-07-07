@@ -279,7 +279,9 @@ void addToCart() async {
 
   @override
   Widget build(BuildContext context) {
+    
     return MaterialApp(
+      
       title: 'Homepage',
       theme: ThemeData(
         primarySwatch: Colors.orange,
