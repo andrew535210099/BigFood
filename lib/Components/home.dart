@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => UserProvider(),
+      
       child: MaterialApp(
         title: 'Homepage',
         theme: ThemeData(
@@ -249,7 +250,6 @@ void addToCart() async {
           final int mushroomSoupQuantity = cartData['mushroomSoupQuantity'] ?? 0;
           final int zingerBurgerQuantity = cartData['zingerBurgerQuantity'] ?? 0;
           final int rollParathaQuantity = cartData['rollParathaQuantity'] ?? 0;
-          userProvider.setValueCart(burgerQuantity);
 
           // Lakukan sesuatu dengan data yang telah diambil
           print('Burger Quantity: $burgerQuantity');
@@ -259,6 +259,15 @@ void addToCart() async {
           print('Zinger Burger Quantity: $zingerBurgerQuantity');
           print('Roll Paratha Quantity: $rollParathaQuantity');
 
+           userProvider.updateCartData({
+            'burgerQuantity': burgerQuantity,
+            'sandwichQuantity': sandwichQuantity,
+            'pizzaRollQuantity': pizzaRollQuantity,
+            'mushroomSoupQuantity': mushroomSoupQuantity,
+            'zingerBurgerQuantity': zingerBurgerQuantity,
+            'rollParathaQuantity': rollParathaQuantity,
+          });
+        
         } else {
           print('Cart does not exist');
         }
@@ -764,6 +773,7 @@ SliverPadding(
                       color: Color.fromARGB(255, 0, 0, 0),
                     ),
               ),
+              
                             Text("Rp 22.000",
               style:TextStyle(
                       fontSize: 17.0,
@@ -801,6 +811,7 @@ SliverPadding(
               ),
 
             ],),
+            
           ),
         ],
       ),

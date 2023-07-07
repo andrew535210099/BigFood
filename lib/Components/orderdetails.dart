@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'home.dart';
 import '../UserData/user_provider.dart';
 
 void main() {
@@ -117,17 +117,18 @@ class OrderListItem extends StatelessWidget {
 }
 
 
+
+
 class OrderDetaill extends StatelessWidget {
   const OrderDetaill({Key? key});
 
   
   @override
   Widget build(BuildContext context) {
-  final userProvider = Provider.of<UserProvider>(context, listen: false);
-  final cartData = userProvider.cartData;
-  final email = userProvider.getEmail();
-
-  final int burgerQuantity = userProvider.getValueCart();
+    
+   final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final Map<String, int> cartData = userProvider.cartData;
+    final int burgerQuantity = cartData['burgerQuantity'] ?? 0;
   
     return Scaffold(
       body: Stack(
