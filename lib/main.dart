@@ -5,6 +5,7 @@ import 'package:duds/Components/profilepage.dart';
 import 'package:duds/Components/resetpass_screen.dart';
 import 'package:duds/Components/testing_screen.dart';
 import 'package:duds/Components/loading_screen.dart';
+import 'package:duds/Components/track_order.dart';
 import 'package:duds/Components/uploadpreview_screen.dart';
 import 'package:duds/Components/yourorders_screen.dart';
 import 'package:duds/constants.dart';
@@ -58,7 +59,7 @@ class MyApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.white,
       ),
-      initialRoute: '/',
+      initialRoute: '/homebar',
       routes: {
         '/': (context) => const LoadingScreen(),
         '/welcome': (context) => const OnboardingOneScreen(),
@@ -76,6 +77,7 @@ class MyApp extends StatelessWidget {
         '/signupsuccesspage' : (context) => SignUpSuccessPage(),
         '/setlocationpage' : (context) => SetLocationPage(),
         '/homepage' : (context) => HomePage(),
+        '/trackorder' : (context) => TrackOrderPage(),
         '/homebar': (context) {
       final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?; // Perhatikan penggunaan '?'
       final currentIndex = args?['currentIndex'] as int? ?? 0; // Perhatikan penggunaan '?'
