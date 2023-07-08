@@ -27,6 +27,8 @@ class OrderItem {
 
   OrderItem(this.title, this.qty, this.price, this.image);
 
+   int get burgerQuantity => qty;
+
   // OrderItem({this.title, this.qty, this.price,this.image});
 }
 
@@ -92,7 +94,7 @@ class OrderListItem extends StatelessWidget {
 }
 
 class OrderDetaill extends StatelessWidget {
-  const OrderDetaill({Key? key});
+  List<OrderItem> orderItems = []; // Tambahkan list ini
 
   Future<void> fetchCartData() async {
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -111,6 +113,16 @@ class OrderDetaill extends StatelessWidget {
 
     if (data != null && data.containsKey('burgerQuantity')) {
       print('Burger Quantity: ${data['burgerQuantity']}');
+      int burgerQuantity = data['burgerQuantity'] as int;
+        OrderItem orderItem = OrderItem(
+          "Burger",
+          burgerQuantity,
+          10000, // Ganti dengan harga sesuai kebutuhan
+          "assets/burger_image.jpg", // Ganti dengan path gambar sesuai kebutuhan
+        );
+      int burgerQuantity1 = orderItem.burgerQuantity;
+      orderItems.add(orderItem);
+      print(burgerQuantity1);
     } else {
       print('Properti "burgerQuantity" tidak ditemukan di dokumen dengan ID ${doc.id}');
     }
