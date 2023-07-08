@@ -321,15 +321,60 @@ void addToCart() async {
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.all(20),
-                child: Text(
-                  'Popular Menu',
-                  style: TextStyle(
-                    fontSize: 24.0,
-                    fontWeight: FontWeight.bold,
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        'Popular menu',
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontSize: 24.0,
+                          fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    Expanded(
+                      child: Text(
+                        'View More',
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
+            /*Container(
+              padding: const EdgeInsets.all(20),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Special Deal for December',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                        SizedBox(width: 10), // Adding spacing between image and text
+                        Image.asset(
+                          'assets/specialdeal1.png', // Replace with your image path
+                          width: 100,
+                          height: 100,
+                        ),
+                ],
+              ),
+            ),*/
             SliverPadding(
               padding: const EdgeInsets.all(20),
               sliver: SliverGrid.count(
