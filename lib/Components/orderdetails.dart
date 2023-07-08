@@ -33,236 +33,238 @@ class OrderItem {
 class OrderListItem extends StatelessWidget {
   final OrderItem item;
 
-  const OrderListItem(Key? key, this.item):super(key: key);
+  const OrderListItem({Key? key, required this.item}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-              Container(
-        width: 100,
-        height: 100,
-        clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
+        Container(
+          width: 100,
+          height: 100,
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: item.image != null ? Image.network(item.image, fit: BoxFit.cover) : null,
         ),
-        child: item.image != null? Image.network(item.image,fit: BoxFit.cover,):null,
-      ),
-      const SizedBox(width: 20.0,),
-      Expanded(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(item.title,
-                style: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 0, 0, 0),
-              ),
-            
-            ),
-            const SizedBox(height: 5.0,),
-              Text("${item.qty}",
-                  style: TextStyle(
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 0, 0, 0),
-                    )),
-            // Container(
-            //   decoration: BoxDecoration(
-            //     border: Border.all(
-            //       color: Colors.grey,
-            //       width: 1.0,
-            //     ),
-            //     borderRadius: BorderRadius.circular(5.0),
-
-            //   ),
-            //   child: Row(
-            //     children: [
-            //       // IconButton(
-            //       //   padding: const EdgeInsets.all(4.0),
-            //       // icon: Icon(Icons.minimize),
-            //       // onPressed: (){
-
-            //       // },
-
-            //       // ),
-
-            //       // IconButton(
-            //       // padding: const EdgeInsets.all(4.0),
-            //       // icon: Icon(Icons.add),
-            //       // onPressed: (){
-                    
-            //       // },
-
-            //       // )
-            //     ],
-            //   ),
-            // ),
-          ],
+        const SizedBox(
+          width: 20.0,
         ),
-      ),
-      const SizedBox(width: 10.0,),
-      Text("${item.price * item.qty}",
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                item.title,
                 style: TextStyle(
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 0, 0, 0),
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 0, 0, 0),
+                ),
               ),
+              const SizedBox(height: 5.0),
+              Text(
+                "${item.qty}",
+                style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 0, 0, 0),
+                ),
               ),
-
+            ],
+          ),
+        ),
+        const SizedBox(width: 10.0),
+        Text(
+          "${item.price * item.qty}",
+          style: TextStyle(
+            fontSize: 16.0,
+            fontWeight: FontWeight.bold,
+            color: Color.fromARGB(255, 0, 0, 0),
+          ),
+        ),
       ],
     );
   }
 }
 
-
-
-
 class OrderDetaill extends StatelessWidget {
   const OrderDetaill({Key? key});
 
-  
-  @override
-  Widget build(BuildContext context) {
-    
-   final userProvider = Provider.of<UserProvider>(context, listen: false);
-    final Map<String, int> cartData = userProvider.cartData;
-    final int burgerQuantity = cartData['burgerQuantity'] ?? 0;
-  
-    return Scaffold(
-      body: Stack(
-        children: [
-          // SizedBox(
-          //   height: double.maxFinite,
-          //   width: 100,
-          // ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: ListView(
-              children: [
-                Text("$burgerQuantity",
-                    style: TextStyle(
-                fontSize: 32.0,
-                fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 0, 0, 0),
-              ),),
-                const SizedBox(height: 20.0,),
-                OrderListItem(key,
-                OrderItem("Pizza", 2, 20000, "assets/bg-welcome2.jpg"),
+  Future<void> fetchCartData() async {
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final User? currentUser = auth.currentUser;
+  final String? userId = currentUser?.uid;
 
-                ),
-                const SizedBox(height: 20.0,),
-                OrderListItem(key,
-                OrderItem("Pizza", 2, 20000, "assets/bg-welcome2.jpg"),
+  CollectionReference cartCollection = FirebaseFirestore.instance.collection('users');
+  CollectionReference cartsCollection = FirebaseFirestore.instance.collection('carts');
+  DocumentSnapshot documentSnapshot = await cartCollection.doc(userId).get();
+  String? userEmail = documentSnapshot['email'] as String?;
 
-                ),
-                const SizedBox(height: 10.0,),
-                _buildDivider(),
-            const SizedBox(height: 10.0,),
-                Container(
- padding: const EdgeInsets.all(20.0),
-                  decoration: BoxDecoration(
-    // color: const Color(0xff7c94b6),
-    border: Border.all(
-      width: 1,
-    ),
-    borderRadius: BorderRadius.circular(12),
-  ),
-                  child: Column(
-                    children: [
-                    Row(
-                  children: [
-                    // const SizedBox(width: 40.0,),
-                    Text("Ongkir",
-                    style: TextStyle(
-                fontSize: 16.0,
-        
-                color: Color.fromARGB(255, 0, 0, 0),
-              ),),
-                    Spacer(),
-                    Text("Rp berapa",
-                    style: TextStyle(
-                fontSize: 16.0,
-              
-                color: Color.fromARGB(255, 0, 0, 0),
-              ),),
+  QuerySnapshot snapshot = await cartsCollection.where('email', isEqualTo: userEmail).get();
 
-                  ],
-                ),
-                    const SizedBox(height: 10.0,),
-                    Row(
-                  children: [
-                    // const SizedBox(width: 40.0,),
-                    Text("Ongkir",
-                    style: TextStyle(
-                fontSize: 16.0,
-                color: Color.fromARGB(255, 0, 0, 0),
-              ),),
-                    Spacer(),
-                    Text("Rp berapa",
-                    style: TextStyle(
-                fontSize: 16.0,
-              
-                color: Color.fromARGB(255, 0, 0, 0),
-              ),),
+  for (DocumentSnapshot doc in snapshot.docs) {
+    Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
 
-                  ],
-                ),
-                  const SizedBox(height: 20.0,),
-                _buildDivider(),
-                const SizedBox(height: 10.0,),
-                Row(
-                  children: [
-                    // const SizedBox(width: 40.0,),
-                    Text("Total",                    style: TextStyle(
-                fontSize: 16.0, fontWeight: FontWeight.bold,
-              
-                color: Color.fromARGB(255, 0, 0, 0),
-              ),),
-                    Spacer(),
-                    Text("Rp total"           ,         style: TextStyle(
-                fontSize: 16.0, fontWeight: FontWeight.bold,
-              
-                color: Color.fromARGB(255, 0, 0, 0),
-              ),),
-                    const SizedBox(width: 20.0,),
-                  ],
-                ),
-                const SizedBox(height: 10.0,),
-                ElevatedButton(  
-                  onPressed: (){
-
-                  },
-                  style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                  ),
-                  child:
-                  Text("Checkout"        ,            style: TextStyle(
-                fontSize: 17.0,
-              
-                
-              ),)),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-        ],
-      )
-    );
-  
-  }
-    Container _buildDivider(){
-      return Container(
-        height: 2.0,
-        width: double.maxFinite,
-        decoration: BoxDecoration(
-          color: Colors.grey.shade400,
-          borderRadius: BorderRadius.circular(5.0),
-        ),
-      );
+    if (data != null && data.containsKey('burgerQuantity')) {
+      print('Burger Quantity: ${data['burgerQuantity']}');
+    } else {
+      print('Properti "burgerQuantity" tidak ditemukan di dokumen dengan ID ${doc.id}');
     }
+  }
 }
 
+
+  @override
+  Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    fetchCartData();
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User? currentUser = auth.currentUser;
+     final String? userId = currentUser?.uid;
+
+    return StreamBuilder<DocumentSnapshot>(
+      stream: FirebaseFirestore.instance.collection('users').doc(userId).snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+
+          return Scaffold(
+            body: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: ListView(
+                children: [
+                  Text(
+                    "Order Details",
+                    style: TextStyle(
+                      fontSize: 32.0,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 0, 0, 0),
+                    ),
+                  ),
+                  const SizedBox(height: 20.0),
+                  OrderListItem(
+                    item: OrderItem("Pizza", 2, 20000, "assets/bg-welcome2.jpg"),
+                  ),
+                  const SizedBox(height: 20.0),
+                  OrderListItem(
+                    item: OrderItem("Pizza", 2, 20000, "assets/bg-welcome2.jpg"),
+                  ),
+                  const SizedBox(height: 10.0),
+                  _buildDivider(),
+                  const SizedBox(height: 10.0),
+                  Container(
+                    padding: const EdgeInsets.all(20.0),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              "Ongkir",
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                color: Color.fromARGB(255, 0, 0, 0),
+                              ),
+                            ),
+                            Spacer(),
+                            Text(
+                              "Rp berapa",
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                color: Color.fromARGB(255, 0, 0, 0),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10.0),
+                        Row(
+                          children: [
+                            Text(
+                              "Ongkir",
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                color: Color.fromARGB(255, 0, 0, 0),
+                              ),
+                            ),
+                            Spacer(),
+                            Text(
+                              "Rp berapa",
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                color: Color.fromARGB(255, 0, 0, 0),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20.0),
+                        _buildDivider(),
+                        const SizedBox(height: 10.0),
+                        Row(
+                          children: [
+                            Text(
+                              "Total",
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromARGB(255, 0, 0, 0),
+                              ),
+                            ),
+                            Spacer(),
+                            Text(
+                              "Rp total",
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromARGB(255, 0, 0, 0),
+                              ),
+                            ),
+                            const SizedBox(width: 20.0),
+                          ],
+                        ),
+                        const SizedBox(height: 10.0),
+                        ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green,
+                          ),
+                          child: Text(
+                            "Checkout",
+                            style: TextStyle(
+                              fontSize: 17.0,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          return CircularProgressIndicator();
+        }
+      },
+    );
+  }
+
+  Container _buildDivider() {
+    return Container(
+      height: 2.0,
+      width: double.maxFinite,
+      decoration: BoxDecoration(
+        color: Colors.grey.shade400,
+        borderRadius: BorderRadius.circular(5.0),
+      ),
+    );
+  }
+}
