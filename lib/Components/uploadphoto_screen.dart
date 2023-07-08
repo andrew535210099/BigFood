@@ -19,6 +19,7 @@ class UploadProfilePage extends StatefulWidget {
 
 class _UploadProfilePageState extends State<UploadProfilePage> {
   late String imagePath;
+  String? photoURL;
 
   Future<void> _pickImage(BuildContext context) async {
     final XTypeGroup typeGroup = XTypeGroup(
@@ -47,20 +48,35 @@ class _UploadProfilePageState extends State<UploadProfilePage> {
       try {
         await user.updatePhotoURL(imagePath);
         print('Foto profil berhasil diunggah');
-        
-        // Dapatkan referensi dokumen pengguna berdasarkan email
+
         var usersRef = FirebaseFirestore.instance.collection('users');
         var querySnapshot = await usersRef.where('email', isEqualTo: email).get();
 
-        // Perbarui URL foto profil di Firestore
         if (querySnapshot.docs.isNotEmpty) {
           var doc = querySnapshot.docs.first;
           await doc.reference.update({'photoURL': imagePath});
         }
+
+        getUserPhotoURL();
       } catch (error) {
         print('Gagal mengunggah foto profil: $error');
       }
     }
+  }
+
+  Future<void> getUserPhotoURL() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      setState(() {
+        photoURL = user.photoURL;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserPhotoURL();
   }
 
   @override
@@ -94,21 +110,17 @@ class _UploadProfilePageState extends State<UploadProfilePage> {
               Container(
                 width: 200.0,
                 height: 200.0,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Color.fromARGB(255, 194, 191, 191),
-                ),
-                child: RawMaterialButton(
-                  onPressed: () {
-                    _pickImage(context);
-                  },
-                  shape: CircleBorder(),
-                  padding: EdgeInsets.all(24.0),
-                  child: Icon(
-                    Icons.person,
-                    size: 150.0,
-                    color: Color.fromARGB(255, 117, 116, 116),
-                  ),
+                child: CircleAvatar(
+                  backgroundColor: Color.fromARGB(255, 194, 191, 191),
+                  radius: 100.0,
+                  backgroundImage: photoURL != null ? NetworkImage(photoURL!) : null,
+                  child: photoURL == null
+                      ? Icon(
+                          Icons.person,
+                          size: 150.0,
+                          color: Color.fromARGB(255, 117, 116, 116),
+                        )
+                      : null,
                 ),
               ),
               SizedBox(height: 40.0),
