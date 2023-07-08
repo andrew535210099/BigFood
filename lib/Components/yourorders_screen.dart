@@ -1,28 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:duds/Components/yourorders_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'home.dart';
 import '../UserData/user_provider.dart';
 
 void main() {
-  runApp(OrderDetail());
+  runApp(yourOrders());
 }
 
-class OrderDetail extends StatelessWidget {
+class yourOrders extends StatelessWidget {
+  const yourOrders({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      routes: {
-        '/orderlast': (context) => yourOrders(), // Replace yourOrders with the actual widget for your orders
-      },
       home: OrderDetaill(),
     );
   }
 }
-
 
 
 
@@ -71,7 +67,7 @@ class OrderListItem extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              item.title,
+              "Processing",
               style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold,
@@ -80,10 +76,9 @@ class OrderListItem extends StatelessWidget {
             ),
             const SizedBox(height: 5.0),
             Text(
-              "${item.qty}",
+              "OrderID : 1452547",
               style: TextStyle(
                 fontSize: 16.0,
-                fontWeight: FontWeight.bold,
                 color: Color.fromARGB(255, 0, 0, 0),
               ),
             ),
@@ -211,6 +206,31 @@ class _OrderDetaillState extends State<OrderDetaill> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Scaffold(
+            appBar:AppBar(
+  title: Text(
+    'Your Order',
+    style: TextStyle(fontSize: 24.0), // Ubah ukuran font sesuai keinginan Anda
+  ),
+  backgroundColor: Color(int.parse('FF6440', radix: 16)).withOpacity(1.0),
+  leading: IconButton(
+    icon: Icon(Icons.arrow_back),
+    onPressed: () {
+      Navigator.pop(context); // Kembali ke halaman sebelumnya
+    },
+  ),
+  toolbarHeight: 70, toolbarTextStyle: TextTheme(
+    headline6: TextStyle(
+      fontSize: 20.0, // Ubah ukuran font tulisan AppBar sesuai keinginan Anda
+      color: Colors.white, // Ubah warna tulisan AppBar sesuai keinginan Anda
+    ),
+  ).bodyText2, titleTextStyle: TextTheme(
+    headline6: TextStyle(
+      fontSize: 20.0, // Ubah ukuran font tulisan AppBar sesuai keinginan Anda
+      color: Colors.white, // Ubah warna tulisan AppBar sesuai keinginan Anda
+    ),
+  ).headline6,
+),
+
             body: Stack(
               children: [
                 Positioned.fill(
@@ -222,17 +242,6 @@ class _OrderDetaillState extends State<OrderDetaill> {
                   padding: const EdgeInsets.all(20.0),
                   child: ListView(
                     children: [
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "Order Details",
-                          style: TextStyle(
-                            fontSize: 32.0,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 0, 0, 0),
-                          ),
-                        ),
-                      ),
                       const SizedBox(height: 20.0),
                       ListView.separated(
                         shrinkWrap: true,
@@ -248,100 +257,8 @@ class _OrderDetaillState extends State<OrderDetaill> {
                         },
                       ),
                       const SizedBox(height: 10.0),
-                      _buildDivider(),
                       const SizedBox(height: 10.0),
-                      Container(
-                        padding: const EdgeInsets.all(20.0),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Text(
-                                  "Total ",
-                                  style: TextStyle(
-                                    fontSize: 16.0,
-                                    color: Color.fromARGB(255, 0, 0, 0),
-                                  ),
-                                ),
-                                Spacer(),
-                                Text(
-                                  "Rp ${calculateTotalPrice()}",
-                                  style: TextStyle(
-                                    fontSize: 16.0,
-                                    color: Color.fromARGB(255, 0, 0, 0),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 10.0),
-                            Row(
-                              children: [
-                                Text(
-                                  "Delivery",
-                                  style: TextStyle(
-                                    fontSize: 16.0,
-                                    color: Color.fromARGB(255, 0, 0, 0),
-                                  ),
-                                ),
-                                Spacer(),
-                                Text(
-                                  "Rp ${calculateOngkir()}",
-                                  style: TextStyle(
-                                    fontSize: 16.0,
-                                    color: Color.fromARGB(255, 0, 0, 0),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 20.0),
-                            _buildDivider(),
-                            const SizedBox(height: 10.0),
-                            Row(
-                              children: [
-                                Text(
-                                  "Subtotal",
-                                  style: TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color.fromARGB(255, 0, 0, 0),
-                                  ),
-                                ),
-                                Spacer(),
-                                Text(
-                                  "Rp ${calculateTotalPrice() + calculateOngkir()}",
-                                  style: TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color.fromARGB(255, 0, 0, 0),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 10.0),
-                            ElevatedButton(
-                              onPressed: () { 
-                                Navigator.pushNamed(context, '/orderlast');
-                              },
-                              style: ElevatedButton.styleFrom(
-                                primary: Color(int.parse('FF6440', radix: 16)).withOpacity(1.0),
-                                minimumSize: Size(double.infinity, 48.0),
-                              ),
-                              child: Text(
-                                "Checkout",
-                                style: TextStyle(
-                                  fontSize: 17.0,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      
                     ],
                   ),
                 ),
