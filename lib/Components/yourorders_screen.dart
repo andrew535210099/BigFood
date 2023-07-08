@@ -206,6 +206,31 @@ class _OrderDetaillState extends State<OrderDetaill> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Scaffold(
+            appBar:AppBar(
+  title: Text(
+    'Your Order',
+    style: TextStyle(fontSize: 24.0), // Ubah ukuran font sesuai keinginan Anda
+  ),
+  backgroundColor: Color(int.parse('FF6440', radix: 16)).withOpacity(1.0),
+  leading: IconButton(
+    icon: Icon(Icons.arrow_back),
+    onPressed: () {
+      Navigator.pop(context); // Kembali ke halaman sebelumnya
+    },
+  ),
+  toolbarHeight: 70, toolbarTextStyle: TextTheme(
+    headline6: TextStyle(
+      fontSize: 20.0, // Ubah ukuran font tulisan AppBar sesuai keinginan Anda
+      color: Colors.white, // Ubah warna tulisan AppBar sesuai keinginan Anda
+    ),
+  ).bodyText2, titleTextStyle: TextTheme(
+    headline6: TextStyle(
+      fontSize: 20.0, // Ubah ukuran font tulisan AppBar sesuai keinginan Anda
+      color: Colors.white, // Ubah warna tulisan AppBar sesuai keinginan Anda
+    ),
+  ).headline6,
+),
+
             body: Stack(
               children: [
                 Positioned.fill(
@@ -217,17 +242,6 @@ class _OrderDetaillState extends State<OrderDetaill> {
                   padding: const EdgeInsets.all(20.0),
                   child: ListView(
                     children: [
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "Your Order",
-                          style: TextStyle(
-                            fontSize: 32.0,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 0, 0, 0),
-                          ),
-                        ),
-                      ),
                       const SizedBox(height: 20.0),
                       ListView.separated(
                         shrinkWrap: true,
