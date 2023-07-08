@@ -278,7 +278,7 @@ class _OrderDetaillState extends State<OrderDetaill> {
                             Row(
                               children: [
                                 Text(
-                                  "Ongkir",
+                                  "Delivery",
                                   style: TextStyle(
                                     fontSize: 16.0,
                                     color: Color.fromARGB(255, 0, 0, 0),
@@ -300,7 +300,7 @@ class _OrderDetaillState extends State<OrderDetaill> {
                             Row(
                               children: [
                                 Text(
-                                  "Total",
+                                  "Subtotal",
                                   style: TextStyle(
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.bold,
@@ -322,7 +322,8 @@ class _OrderDetaillState extends State<OrderDetaill> {
                             ElevatedButton(
                               onPressed: () {},
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green,
+                                primary: Color(int.parse('FF6440', radix: 16)).withOpacity(1.0),
+                                minimumSize: Size(double.infinity, 48.0),
                               ),
                               child: Text(
                                 "Checkout",
@@ -355,7 +356,7 @@ class _OrderDetaillState extends State<OrderDetaill> {
       width: double.maxFinite,
       decoration: BoxDecoration(
         color: Colors.grey.shade400,
-        borderRadius: BorderRadius.circular(5.0),
+        borderRadius: BorderRadius.circular(1.0),
       ),
     );
   }
