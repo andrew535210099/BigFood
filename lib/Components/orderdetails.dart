@@ -27,13 +27,10 @@ class OrderItem {
 
   OrderItem(this.title, this.qty, this.price, this.image);
 
-   int get burgerQuantity => qty;
-
-  // OrderItem({this.title, this.qty, this.price,this.image});
+  int get burgerQuantity => qty;
 }
 
 class OrderListItem extends StatelessWidget {
-  
   final OrderItem item;
 
   const OrderListItem({Key? key, required this.item}) : super(key: key);
@@ -93,98 +90,105 @@ class OrderListItem extends StatelessWidget {
   }
 }
 
-class OrderDetaill extends StatelessWidget {
-  List<OrderItem> orderItems = []; // Tambahkan list ini
+class OrderDetaill extends StatefulWidget {
+  @override
+  _OrderDetaillState createState() => _OrderDetaillState();
+}
+
+class _OrderDetaillState extends State<OrderDetaill> {
+  List<OrderItem> orderItems = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchCartData();
+  }
 
   Future<void> fetchCartData() async {
-  final FirebaseAuth auth = FirebaseAuth.instance;
-  final User? currentUser = auth.currentUser;
-  final String? userId = currentUser?.uid;
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User? currentUser = auth.currentUser;
+    final String? userId = currentUser?.uid;
 
-  CollectionReference cartCollection = FirebaseFirestore.instance.collection('users');
-  CollectionReference cartsCollection = FirebaseFirestore.instance.collection('carts');
-  DocumentSnapshot documentSnapshot = await cartCollection.doc(userId).get();
-  String? userEmail = documentSnapshot['email'] as String?;
+    CollectionReference cartCollection = FirebaseFirestore.instance.collection('users');
+    CollectionReference cartsCollection = FirebaseFirestore.instance.collection('carts');
+    DocumentSnapshot documentSnapshot = await cartCollection.doc(userId).get();
+    String? userEmail = documentSnapshot['email'] as String?;
 
-  QuerySnapshot snapshot = await cartsCollection.where('email', isEqualTo: userEmail).get();
+    QuerySnapshot snapshot = await cartsCollection.where('email', isEqualTo: userEmail).get();
 
-  for (DocumentSnapshot doc in snapshot.docs) {
-    Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
+    for (DocumentSnapshot doc in snapshot.docs) {
+      Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
 
-    if (data != null) {
-      // print('Burger Quantity: ${data['burgerQuantity']}');
-      int zingerBurgerQuantity = data['zingerBurgerQuantity'] as int;
-      int rollParathaQuantity = data['rollParathaQuantity'] as int;
-      int burgerQuantity = data['burgerQuantity'] as int;
-      int sandwichQuantity = data['sandwichQuantity'] as int;
-      int pizzaRollQuantity =  data['pizzaRollQuantity'] as int;
-      int mushroomSoupQuantity = data['mushroomSoupQuantity'] as int;
+      if (data != null) {
+        int zingerBurgerQuantity = data['zingerBurgerQuantity'] as int;
+        int rollParathaQuantity = data['rollParathaQuantity'] as int;
+        int burgerQuantity = data['burgerQuantity'] as int;
+        int sandwichQuantity = data['sandwichQuantity'] as int;
+        int pizzaRollQuantity = data['pizzaRollQuantity'] as int;
+        int mushroomSoupQuantity = data['mushroomSoupQuantity'] as int;
 
         OrderItem orderItem = OrderItem(
           "Zinger Burger",
           zingerBurgerQuantity,
-          20000, // Ganti dengan harga sesuai kebutuhan
-          "assets/burger_image.jpg", // Ganti dengan path gambar sesuai kebutuhan
+          20000,
+          "assets/zingerBurger.png",
         );
         OrderItem orderItem1 = OrderItem(
           "Roll Paratha",
           rollParathaQuantity,
-          25000, // Ganti dengan harga sesuai kebutuhan
-          "assets/burger_image.jpg", // Ganti dengan path gambar sesuai kebutuhan
+          25000,
+          "assets/rollParatha.png",
         );
         OrderItem orderItem2 = OrderItem(
           "Burger",
           burgerQuantity,
-          15000, // Ganti dengan harga sesuai kebutuhan
-          "assets/burger_image.jpg", // Ganti dengan path gambar sesuai kebutuhan
+          15000,
+          "assets/burger.png",
         );
         OrderItem orderItem3 = OrderItem(
           "Sandwich",
           sandwichQuantity,
-          20000, // Ganti dengan harga sesuai kebutuhan
-          "assets/burger_image.jpg", // Ganti dengan path gambar sesuai kebutuhan
+          20000,
+          "assets/sandwich.png",
         );
         OrderItem orderItem4 = OrderItem(
           "Pizza Roll",
           pizzaRollQuantity,
-          22000, // Ganti dengan harga sesuai kebutuhan
-          "assets/burger_image.jpg", // Ganti dengan path gambar sesuai kebutuhan
+          22000,
+          "assets/pizzaRoll.png",
         );
         OrderItem orderItem5 = OrderItem(
           "Mushroom Soup",
           mushroomSoupQuantity,
-          10000, // Ganti dengan harga sesuai kebutuhan
-          "assets/burger_image.jpg", // Ganti dengan path gambar sesuai kebutuhan
+          10000,
+          'assets/mushroomSoup.png',
         );
-      
-      orderItems.add(orderItem);
-      orderItems.add(orderItem1);
-      orderItems.add(orderItem2);
-      orderItems.add(orderItem3);
-      orderItems.add(orderItem4);
-      orderItems.add(orderItem5);
-      print(orderItems.length);
-      print(orderItems[0].qty);
-    } else {
-      print('Properti tidak ditemukan di dokumen dengan ID ${doc.id}');
+
+        setState(() {
+          orderItems.add(orderItem);
+          orderItems.add(orderItem1);
+          orderItems.add(orderItem2);
+          orderItems.add(orderItem3);
+          orderItems.add(orderItem4);
+          orderItems.add(orderItem5);
+        });
+      } else {
+        print('Properti tidak ditemukan di dokumen dengan ID ${doc.id}');
+      }
     }
   }
-}
-
 
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    fetchCartData();
     final FirebaseAuth auth = FirebaseAuth.instance;
     final User? currentUser = auth.currentUser;
-     final String? userId = currentUser?.uid;
+    final String? userId = currentUser?.uid;
 
     return StreamBuilder<DocumentSnapshot>(
       stream: FirebaseFirestore.instance.collection('users').doc(userId).snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-
           return Scaffold(
             body: Padding(
               padding: const EdgeInsets.all(20.0),
@@ -199,12 +203,12 @@ class OrderDetaill extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20.0),
-                  OrderListItem(
-                    item: OrderItem("Pizza", 2, 20000, "assets/bg-welcome2.jpg"),
-                  ),
-                  const SizedBox(height: 20.0),
-                  OrderListItem(
-                    item: OrderItem("Pizza", 2, 20000, "assets/bg-welcome2.jpg"),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: orderItems.length,
+                    itemBuilder: (context, index) {
+                      return OrderListItem(item: orderItems[index]);
+                    },
                   ),
                   const SizedBox(height: 10.0),
                   _buildDivider(),
