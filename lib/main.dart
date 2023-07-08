@@ -6,6 +6,7 @@ import 'package:duds/Components/resetpass_screen.dart';
 import 'package:duds/Components/testing_screen.dart';
 import 'package:duds/Components/loading_screen.dart';
 import 'package:duds/Components/uploadpreview_screen.dart';
+import 'package:duds/Components/yourorders_screen.dart';
 import 'package:duds/constants.dart';
 import 'package:duds/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -88,6 +89,7 @@ class MyApp extends StatelessWidget {
         '/orderdetails' : (context) => OrderDetail(),
         '/profilepage' : (context) => ProfilePage(),
         '/cartScreen' : (context) => CartScreen(),
+        '/orderlast' : (context) => yourOrders(),
       },
     );
   }
