@@ -135,6 +135,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Stack(
                   children: [
                     Row(
+                      
                       children: [
                         CircleAvatar(
                           radius: 60.0,

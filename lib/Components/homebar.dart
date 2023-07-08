@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:duds/Components/uploadpreview_screen.dart';
 
 
-import 'package:duds/Components/chat.dart';
+import 'package:duds/Components/rooms.dart';
 void main() {
   runApp(HomeBar());
 }
@@ -26,7 +26,7 @@ class _HomeBarState extends State<HomeBar> {
   final screens=[
 HomePage(),
 OrderDetail(),
-Chat(),
+RoomsPage(),
 ProfileScreen(),
   ];
   @override

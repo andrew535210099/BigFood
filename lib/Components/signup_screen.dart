@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto/crypto.dart';
 import 'dart:convert';
+import 'package:flutter/services.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
+import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -54,6 +57,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
       if (userCredential.user != null) {
         // Save username, email, and hashed password to Firestore
+    await FirebaseChatCore.instance.createUserInFirestore(
+        types.User(
+          firstName: username,
+          id: userCredential.user!.uid,
+          imageUrl: 'https://i.pravatar.cc/300?u=$email',
+        ),
+      );
+
         await FirebaseFirestore.instance
             .collection('users')
             .doc(userCredential.user!.uid)
@@ -61,7 +72,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           'username': username,
           'email': email,
           'hashedPassword': hashedPassword,
-        });
+        },SetOptions(merge: true));
+        
 
         // Registration successful, take appropriate action such as navigating to the home page
         Navigator.pushReplacementNamed(context, '/signupsuccesspage');

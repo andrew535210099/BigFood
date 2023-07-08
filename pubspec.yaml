@@ -38,8 +38,10 @@ dependencies:
   image_picker: ^0.8.4+4
   # file_chooser: any
   file_selector: ^0.9.4
+  file_picker: ^5.3.2 
   dotted_border: ^2.0.0
   firebase_core: ^2.14.0
+  firebase_storage: ^11.2.4
   cloud_firestore: ^4.8.1
   firebase_auth: ^4.6.3
   path_provider: ^2.0.15
@@ -47,6 +49,10 @@ dependencies:
   crypto: ^3.0.3
   fluttertoast: ^8.2.2
   intl: ^0.18.1
+  flutter_chat_ui: ^1.6.8
+  flutter_chat_types: ^3.6.1
+  flutter_firebase_chat_core: ^1.6.7
+  open_filex: ^4.3.2
 
 dev_dependencies:
   flutter_test:

@@ -57,7 +57,7 @@ class MyApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.white,
       ),
-      initialRoute: '/homebar',
+      initialRoute: '/',
       routes: {
         '/': (context) => const LoadingScreen(),
         '/welcome': (context) => const OnboardingOneScreen(),
@@ -84,7 +84,7 @@ class MyApp extends StatelessWidget {
         '/profile1' : (context) =>  ProfileScreen(),
         '/deleteaccount' : (context) => const DeleteAccount(),
         '/filter' : (context) => FilterScreenPage(),
-        '/chat' : (context) => Chat(),
+        // '/chat' : (context) => Chat(),
         '/orderdetails' : (context) => OrderDetail(),
         '/profilepage' : (context) => ProfilePage(),
         '/cartScreen' : (context) => CartScreen(),
