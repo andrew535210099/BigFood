@@ -59,7 +59,8 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     }
   } catch (error) {
-    
+    print('Error logging in: $error');
+    try{
     final userCredential =
         await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: email,
@@ -87,6 +88,9 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     }
     // Handle error
+    }catch(error){
+      print(error);
+    }
   }
 }
 
