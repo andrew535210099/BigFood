@@ -64,7 +64,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         });
 
         // Registration successful, take appropriate action such as navigating to the home page
-        Navigator.pushReplacementNamed(context, '/login');
+        Navigator.pushReplacementNamed(context, '/signupsuccesspage');
         print('Registration successful');
       }
     } catch (error) {

@@ -28,6 +28,14 @@ class SignUpSuccessPage extends StatelessWidget {
                     children: [
                       Align(
                         alignment: Alignment.center,
+                        child: Image.asset(
+                          'assets/congrats.png', // Path to your image asset
+                          width: 100,
+                          height: 100,
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.center,
                         child: Text(
                           'Congrats!',
                           style: TextStyle(
@@ -58,7 +66,7 @@ class SignUpSuccessPage extends StatelessWidget {
                     padding: EdgeInsets.only(bottom: 16.0),
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/homebar');
+                        Navigator.pushNamed(context, '/login');
                       },
                       style: ElevatedButton.styleFrom(
                       primary: Color(int.parse('FF6440', radix: 16)).withOpacity(1.0),
