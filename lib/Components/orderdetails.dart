@@ -351,7 +351,7 @@ class _OrderDetaillState extends State<OrderDetaill> {
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
-          return CircularProgressIndicator();
+          return Container();
         }
       },
     );
