@@ -80,7 +80,6 @@ class PaymentMethodPage extends StatelessWidget {
     );
   }
 }
-
 class PaymentOptionTile extends StatelessWidget {
   final IconData icon;
   final String title;
@@ -95,25 +94,34 @@ class PaymentOptionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 32.0),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 25.0),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(1.0),
+      ),
+      child: Material(
+        child: InkWell(
+          onTap: onTap,
           borderRadius: BorderRadius.circular(8.0),
-        ),
-        child: ListTile(
-          contentPadding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-          leading: Icon(icon),
-          title: Text(
-            title,
-            style: TextStyle(fontSize: 18.0),
+          child: Container(
+            padding:
+                EdgeInsets.symmetric(vertical: 24.0, horizontal: 32.0),
+            child: Row(
+              children: [
+                Icon(icon),
+                SizedBox(width: 16.0),
+                Expanded(
+                  child: Text(
+                    title,
+                    style: TextStyle(fontSize: 18.0),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 }
-
-
