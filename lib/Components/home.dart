@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 import '../UserData/user_provider.dart';
 
@@ -207,11 +208,17 @@ void addToCart() async {
       await cartRef.doc(userUID).set({
         'email': userEmail, // Simpan email pengguna di dokumen keranjang
         'burgerQuantity': burgerQuantity,
+        'burgerPrice': 20000,
         'sandwichQuantity': sandwichQuantity,
+        'sandwichPrice' : 20000,
         'pizzaRollQuantity': pizzaRollQuantity,
+        'pizzaRollPrice' : 20000,
         'mushroomSoupQuantity': mushroomSoupQuantity,
+        'mushroomSoupPrice' : 17000,
         'zingerBurgerQuantity': zingerBurgerQuantity,
+        'zingerBurgerPrice': 20000,
         'rollParathaQuantity': rollParathaQuantity,
+        'rollParathaPrice': 25000,
       });
     }
   } catch (e) {
