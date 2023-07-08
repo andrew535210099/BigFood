@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
   
+
+  
 class PaymentMethodPage extends StatelessWidget {
   const PaymentMethodPage({super.key});
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -43,15 +47,15 @@ class PaymentMethodPage extends StatelessWidget {
                 children: <Widget>[
                   PaymentOptionTile(
                     icon: Icons.attach_money,
-                    title: 'Cash',
+                    title: 'Cash', onTap: () {  },
                   ),
                   PaymentOptionTile(
                     icon: Icons.credit_card,
-                    title: 'Card',
+                    title: 'Card', onTap: () {  },
                   ),
                   PaymentOptionTile(
                     icon: Icons.business,
-                    title: 'Third Party',
+                    title: 'Third Party', onTap: () {  },
                   ),
                 ],
               ),
@@ -80,26 +84,36 @@ class PaymentMethodPage extends StatelessWidget {
 class PaymentOptionTile extends StatelessWidget {
   final IconData icon;
   final String title;
+  final VoidCallback onTap;
 
-  const PaymentOptionTile({Key? key, required this.icon, required this.title})
-      : super(key: key);
+  const PaymentOptionTile({
+    Key? key,
+    required this.icon,
+    required this.title,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 32.0),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey),
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: ListTile(
-        contentPadding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-        leading: Icon(icon),
-        title: Text(
-          title,
-          style: TextStyle(fontSize: 18.0),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 32.0),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        child: ListTile(
+          contentPadding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+          leading: Icon(icon),
+          title: Text(
+            title,
+            style: TextStyle(fontSize: 18.0),
+          ),
         ),
       ),
     );
   }
 }
+
+
