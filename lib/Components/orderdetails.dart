@@ -218,12 +218,17 @@ class _OrderDetaillState extends State<OrderDetaill> {
   shrinkWrap: true,
   itemCount: orderItems.length,
   itemBuilder: (context, index) {
+    if (orderItems[index].qty == 0) {
+      // Mengabaikan item dengan qty 0
+      return SizedBox();
+    }
     return OrderListItem(item: orderItems[index]);
   },
   separatorBuilder: (context, index) {
     return SizedBox(height: 10.0); // Menambahkan jarak vertikal antara item
   },
 ),
+
 
                   const SizedBox(height: 10.0),
                   _buildDivider(),
