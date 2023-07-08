@@ -111,20 +111,62 @@ class OrderDetaill extends StatelessWidget {
   for (DocumentSnapshot doc in snapshot.docs) {
     Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
 
-    if (data != null && data.containsKey('burgerQuantity')) {
-      print('Burger Quantity: ${data['burgerQuantity']}');
+    if (data != null) {
+      // print('Burger Quantity: ${data['burgerQuantity']}');
+      int zingerBurgerQuantity = data['zingerBurgerQuantity'] as int;
+      int rollParathaQuantity = data['rollParathaQuantity'] as int;
       int burgerQuantity = data['burgerQuantity'] as int;
+      int sandwichQuantity = data['sandwichQuantity'] as int;
+      int pizzaRollQuantity =  data['pizzaRollQuantity'] as int;
+      int mushroomSoupQuantity = data['mushroomSoupQuantity'] as int;
+
         OrderItem orderItem = OrderItem(
+          "Zinger Burger",
+          zingerBurgerQuantity,
+          20000, // Ganti dengan harga sesuai kebutuhan
+          "assets/burger_image.jpg", // Ganti dengan path gambar sesuai kebutuhan
+        );
+        OrderItem orderItem1 = OrderItem(
+          "Roll Paratha",
+          rollParathaQuantity,
+          25000, // Ganti dengan harga sesuai kebutuhan
+          "assets/burger_image.jpg", // Ganti dengan path gambar sesuai kebutuhan
+        );
+        OrderItem orderItem2 = OrderItem(
           "Burger",
           burgerQuantity,
+          15000, // Ganti dengan harga sesuai kebutuhan
+          "assets/burger_image.jpg", // Ganti dengan path gambar sesuai kebutuhan
+        );
+        OrderItem orderItem3 = OrderItem(
+          "Sandwich",
+          sandwichQuantity,
+          20000, // Ganti dengan harga sesuai kebutuhan
+          "assets/burger_image.jpg", // Ganti dengan path gambar sesuai kebutuhan
+        );
+        OrderItem orderItem4 = OrderItem(
+          "Pizza Roll",
+          pizzaRollQuantity,
+          22000, // Ganti dengan harga sesuai kebutuhan
+          "assets/burger_image.jpg", // Ganti dengan path gambar sesuai kebutuhan
+        );
+        OrderItem orderItem5 = OrderItem(
+          "Mushroom Soup",
+          mushroomSoupQuantity,
           10000, // Ganti dengan harga sesuai kebutuhan
           "assets/burger_image.jpg", // Ganti dengan path gambar sesuai kebutuhan
         );
-      int burgerQuantity1 = orderItem.burgerQuantity;
+      
       orderItems.add(orderItem);
-      print(burgerQuantity1);
+      orderItems.add(orderItem1);
+      orderItems.add(orderItem2);
+      orderItems.add(orderItem3);
+      orderItems.add(orderItem4);
+      orderItems.add(orderItem5);
+      print(orderItems.length);
+      print(orderItems[0].qty);
     } else {
-      print('Properti "burgerQuantity" tidak ditemukan di dokumen dengan ID ${doc.id}');
+      print('Properti tidak ditemukan di dokumen dengan ID ${doc.id}');
     }
   }
 }
