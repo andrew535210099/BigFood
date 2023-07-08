@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:duds/Components/home.dart';
 import 'package:duds/Components/orderdetails.dart';
 import 'package:flutter/material.dart';
@@ -26,79 +28,70 @@ class _HelpPageState extends State<HelpPage> {
     appBar: AppBar(
     backgroundColor: const Color.fromARGB(255, 255, 100, 64),
       title: const Text('FAQ'),
-    ),
-    body:const ExpansionPanelListExample(), 
+        leading: IconButton(
+    icon: Icon(Icons.arrow_back),
+    onPressed: () {
+        Navigator.pushNamed(context, '/homebar');// Kembali ke halaman sebelumnya
+    },
+  )),
+    body:const Steps(), 
   );
 
 }
-
-// stores ExpansionPanel state information
-class Item {
-  Item({
-    required this.expandedValue,
-    required this.headerValue,
-    this.isExpanded = false,
-  });
-
-  String expandedValue;
-  String headerValue;
+class Step {
+  Step(
+    this.title,
+    this.body,
+    [this.isExpanded = false]
+  );
+  String title;
+  String body;
   bool isExpanded;
 }
 
-List<Item> generateItems(int numberOfItems) {
-  return List<Item>.generate(numberOfItems, (int index) {
-    return Item(
-      headerValue: 'Panel $index',
-      expandedValue: 'This is item number $index',
-    );
-  });
+List<Step> getSteps() {
+  return [
+    Step('Step 0: Install Flutter', 'Install Flutter development tools according to the official documentation.'),
+    Step('Step 1: Create a project', 'Open your terminal, run `flutter create <project_name>` to create a new project.'),
+    Step('Step 2: Run the app', 'Change your terminal directory to the project directory, enter `flutter run`.'),
+   Step('Step 2: Run the app', 'Change your terminal directory to the project directory, enter `flutter run`.'),
+  ];
 }
 
-class ExpansionPanelListExample extends StatefulWidget {
-  const ExpansionPanelListExample({super.key});
-
+class Steps extends StatefulWidget {
+  const Steps({Key? key}) : super(key: key);
   @override
-  State<ExpansionPanelListExample> createState() =>
-      _ExpansionPanelListExampleState();
+  State<Steps> createState() => _StepsState();
 }
 
-class _ExpansionPanelListExampleState extends State<ExpansionPanelListExample> {
-  final List<Item> _data = generateItems(8);
-
+class _StepsState extends State<Steps> {
+  final List<Step> _steps = getSteps();
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        child: _buildPanel(),
+        child: _renderSteps(),
       ),
     );
   }
-
-  Widget _buildPanel() {
+  Widget _renderSteps() {
     return ExpansionPanelList(
       expansionCallback: (int index, bool isExpanded) {
         setState(() {
-          _data[index].isExpanded = !isExpanded;
+          _steps[index].isExpanded = !isExpanded;
         });
       },
-      children: _data.map<ExpansionPanel>((Item item) {
+      children: _steps.map<ExpansionPanel>((Step step) {
         return ExpansionPanel(
           headerBuilder: (BuildContext context, bool isExpanded) {
             return ListTile(
-              title: Text(item.headerValue),
+              title: Text(step.title),
             );
           },
           body: ListTile(
-              title: Text(item.expandedValue),
-              subtitle:
-                  const Text('To delete this panel, tap the trash can icon'),
-              trailing: const Icon(Icons.delete),
-              onTap: () {
-                setState(() {
-                  _data.removeWhere((Item currentItem) => item == currentItem);
-                });
-              }),
-          isExpanded: item.isExpanded,
+            title: Text(step.body),
+          ),
+          isExpanded: step.isExpanded,
         );
       }).toList(),
     );
