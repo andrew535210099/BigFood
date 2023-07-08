@@ -172,29 +172,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Positioned(
                       top: 60,
                       right: 0,
-                      child: GestureDetector(
+                      child:GestureDetector(
                         onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text('Edit Profile'),
-                                // Add your form or input fields here
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      // Perform save or update action
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text('Save'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
+                          Navigator.pushNamed(context, '/profile');
                         },
                         child: Icon(Icons.edit),
                       ),
+
                     ),
                   ],
                 ),

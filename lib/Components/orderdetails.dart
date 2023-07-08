@@ -206,131 +206,138 @@ class _OrderDetaillState extends State<OrderDetaill> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Scaffold(
-            body: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: ListView(
-                children: [
-                  Text(
-                    "Order Details",
-                    style: TextStyle(
-                      fontSize: 32.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 0, 0, 0),
-                    ),
+            body: Stack(
+              children: [
+                Positioned.fill(
+                  child: Container(
+                    color: Colors.grey.shade200, // Ubah warna latar belakang sesuai kebutuhan
                   ),
-                  const SizedBox(height: 20.0),
-                  ListView.separated(
-  shrinkWrap: true,
-  itemCount: orderItems.length,
-  itemBuilder: (context, index) {
-    if (orderItems[index].qty == 0) {
-      // Mengabaikan item dengan qty 0
-      return SizedBox();
-    }
-    return OrderListItem(item: orderItems[index]);
-  },
-  separatorBuilder: (context, index) {
-    return SizedBox(height: 10.0); // Menambahkan jarak vertikal antara item
-  },
-),
-
-
-                  const SizedBox(height: 10.0),
-                  _buildDivider(),
-                  const SizedBox(height: 10.0),
-                  Container(
-                    padding: const EdgeInsets.all(20.0),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        width: 1,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: ListView(
+                    children: [
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Order Details",
+                          style: TextStyle(
+                            fontSize: 32.0,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 0, 0, 0),
+                          ),
+                        ),
                       ),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
+                      const SizedBox(height: 20.0),
+                      ListView.separated(
+                        shrinkWrap: true,
+                        itemCount: orderItems.length,
+                        itemBuilder: (context, index) {
+                          if (orderItems[index].qty == 0) {
+                            return SizedBox();
+                          }
+                          return OrderListItem(item: orderItems[index]);
+                        },
+                        separatorBuilder: (context, index) {
+                          return SizedBox(height: 10.0);
+                        },
+                      ),
+                      const SizedBox(height: 10.0),
+                      _buildDivider(),
+                      const SizedBox(height: 10.0),
+                      Container(
+                        padding: const EdgeInsets.all(20.0),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Column(
                           children: [
-                            Text(
-                              "Total ",
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                color: Color.fromARGB(255, 0, 0, 0),
-                              ),
+                            Row(
+                              children: [
+                                Text(
+                                  "Total ",
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    color: Color.fromARGB(255, 0, 0, 0),
+                                  ),
+                                ),
+                                Spacer(),
+                                Text(
+                                  "Rp ${calculateTotalPrice()}",
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    color: Color.fromARGB(255, 0, 0, 0),
+                                  ),
+                                ),
+                              ],
                             ),
-                            Spacer(),
-                            Text(
-                              "Rp ${calculateTotalPrice()}",
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                color: Color.fromARGB(255, 0, 0, 0),
+                            const SizedBox(height: 10.0),
+                            Row(
+                              children: [
+                                Text(
+                                  "Ongkir",
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    color: Color.fromARGB(255, 0, 0, 0),
+                                  ),
+                                ),
+                                Spacer(),
+                                Text(
+                                  "Rp ${calculateOngkir()}",
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    color: Color.fromARGB(255, 0, 0, 0),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 20.0),
+                            _buildDivider(),
+                            const SizedBox(height: 10.0),
+                            Row(
+                              children: [
+                                Text(
+                                  "Total",
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color.fromARGB(255, 0, 0, 0),
+                                  ),
+                                ),
+                                Spacer(),
+                                Text(
+                                  "Rp ${calculateTotalPrice() + calculateOngkir()}",
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color.fromARGB(255, 0, 0, 0),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 10.0),
+                            ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.green,
+                              ),
+                              child: Text(
+                                "Checkout",
+                                style: TextStyle(
+                                  fontSize: 17.0,
+                                ),
                               ),
                             ),
                           ],
                         ),
-                        const SizedBox(height: 10.0),
-                        Row(
-                          children: [
-                            Text(
-                              "Ongkir",
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                color: Color.fromARGB(255, 0, 0, 0),
-                              ),
-                            ),
-                            Spacer(),
-                            Text(
-                              "Rp ${calculateOngkir()}",
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                color: Color.fromARGB(255, 0, 0, 0),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 20.0),
-                        _buildDivider(),
-                        const SizedBox(height: 10.0),
-                        Row(
-  children: [
-    Text(
-      "Total",
-      style: TextStyle(
-        fontSize: 16.0,
-        fontWeight: FontWeight.bold,
-        color: Color.fromARGB(255, 0, 0, 0),
-      ),
-    ),
-    Spacer(),
-    Text(
-      "Rp ${calculateTotalPrice() + calculateOngkir()}",
-      style: TextStyle(
-        fontSize: 16.0,
-        fontWeight: FontWeight.bold,
-        color: Color.fromARGB(255, 0, 0, 0),
-      ),
-    ),
-  ],
-),
-
-
-                        const SizedBox(height: 10.0),
-                        ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.green,
-                          ),
-                          child: Text(
-                            "Checkout",
-                            style: TextStyle(
-                              fontSize: 17.0,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           );
         } else if (snapshot.hasError) {
