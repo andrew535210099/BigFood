@@ -41,7 +41,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   void _signOut() async {
     await _auth.signOut();
-    Navigator.pop(context); // Kembali ke halaman sebelumnya setelah logout
+    print("User telah keluar");
+    Navigator.pushNamed(context, '/login');// Kembali ke halaman sebelumnya setelah logout
   }
 
   void _deleteAccount() async {
@@ -217,6 +218,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       title: Text('Help'),
                       onTap: () {
                         // Action when Help is clicked
+                          Navigator.pushNamed(context, '/help');
                       },
                     ),
                   ],

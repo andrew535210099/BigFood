@@ -201,6 +201,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 255, 100, 64),
           systemOverlayStyle: SystemUiOverlayStyle.light,
           title: const Text('Chat'),
         ),
@@ -213,7 +214,7 @@ class _ChatPageState extends State<ChatPage> {
             builder: (context, snapshot) => Chat(
               isAttachmentUploading: _isAttachmentUploading,
               messages: snapshot.data ?? [],
-              onAttachmentPressed: _handleAtachmentPressed,
+              // onAttachmentPressed: _handleAtachmentPressed,
               onMessageTap: _handleMessageTap,
               onPreviewDataFetched: _handlePreviewDataFetched,
               onSendPressed: _handleSendPressed,

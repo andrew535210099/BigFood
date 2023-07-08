@@ -23,6 +23,7 @@ import 'Components/successnotification_screen.dart';
 import 'Components/testfirestore_screen.dart';
 import 'Components/uploadphoto_screen.dart';
 import 'Components/signup_process_screen.dart';
+import 'Components/help.dart';
 import 'Components/signup_screen.dart';
 import 'Components/verificationcode_screen.dart';
 import 'Components/orderdetails.dart';
@@ -92,6 +93,7 @@ class MyApp extends StatelessWidget {
         '/profilepage' : (context) => ProfilePage(),
         '/cartScreen' : (context) => CartScreen(),
         '/orderlast' : (context) => yourOrders(),
+        '/help' : (context) => HelpPage(),
       },
     );
   }

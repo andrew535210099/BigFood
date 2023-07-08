@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -88,7 +89,15 @@ class _LoginScreenState extends State<LoginScreen> {
     }
     // Handle error
     }catch(error){
-      print('Error logging in: $error');
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+    Fluttertoast.showToast(
+      msg: 'Error logging in: $error',
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      backgroundColor: Color(int.parse('FF6440', radix: 16)).withOpacity(1.0),
+      textColor: Colors.white,
+    );
+  });
     }
   }
 }
