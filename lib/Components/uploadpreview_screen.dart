@@ -218,6 +218,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       title: Text('Help'),
                       onTap: () {
                         // Action when Help is clicked
+                          Navigator.pushNamed(context, '/help');
                       },
                     ),
                   ],

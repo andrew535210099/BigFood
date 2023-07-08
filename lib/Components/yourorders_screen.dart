@@ -215,7 +215,7 @@ class _OrderDetaillState extends State<OrderDetaill> {
   leading: IconButton(
     icon: Icon(Icons.arrow_back),
     onPressed: () {
-      Navigator.pop(context); // Kembali ke halaman sebelumnya
+        Navigator.pushNamed(context, '/homebar');// Kembali ke halaman sebelumnya
     },
   ),
   toolbarHeight: 70, toolbarTextStyle: TextTheme(
