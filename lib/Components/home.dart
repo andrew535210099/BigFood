@@ -442,8 +442,6 @@ void addToCart() async {
             color: const Color.fromARGB(255, 255, 238, 218),
             child: Column(children: [
                   Image.asset(
-                    height:120,
-                          width: 120,
                     'assets/burger.png',
                     fit: BoxFit.contain,
                   ),
@@ -489,8 +487,6 @@ Row(
             color: const Color.fromARGB(255, 255, 238, 218),
             child: Column(children: [
                   Image.asset(
-                    height:120,
-                          width: 120,
                     'assets/sandwich.png',
                     fit: BoxFit.contain,
                   ),
@@ -536,8 +532,6 @@ Row(
             color: const Color.fromARGB(255, 255, 238, 218),
             child: Column(children: [
                   Image.asset(
-                    height:120,
-                          width: 120,
                     'assets/pizzaRoll.png',
                     fit: BoxFit.contain,
                   ),
@@ -583,8 +577,6 @@ Row(
             color: const Color.fromARGB(255, 255, 238, 218),
             child: Column(children: [
                   Image.asset(
-                    height:120,
-                          width: 120,
                     'assets/mushroomSoup.png',
                     fit: BoxFit.contain,
                   ),
@@ -659,8 +651,6 @@ SliverPadding(
             color: const Color.fromARGB(255, 255, 238, 218),
             child: Column(children: [
                   Image.asset(
-                    height:120,
-                          width: 120,
                     'assets/zingerBurger.png',
                     fit: BoxFit.contain,
                   ),
@@ -687,8 +677,6 @@ SliverPadding(
             color: const Color.fromARGB(255, 255, 238, 218),
             child: Column(children: [
                   Image.asset(
-                    height:120,
-                          width: 120,
                     'assets/rollParatha.png',
                     fit: BoxFit.contain,
                   ),
@@ -714,8 +702,6 @@ SliverPadding(
             color: const Color.fromARGB(255, 255, 238, 218),
             child: Column(children: [
                   Image.asset(
-                    height:120,
-                          width: 120,
                     'assets/burger.png',
                     fit: BoxFit.contain,
                   ),
@@ -742,8 +728,6 @@ SliverPadding(
             color: const Color.fromARGB(255, 255, 238, 218),
             child: Column(children: [
                   Image.asset(
-                    height:120,
-                          width: 120,
                     'assets/sandwich.png',
                     fit: BoxFit.contain,
                   ),
@@ -770,8 +754,6 @@ SliverPadding(
             color: const Color.fromARGB(255, 255, 238, 218),
             child: Column(children: [
                   Image.asset(
-                    height:120,
-                          width: 120,
                     'assets/pizzaRoll.png',
                     fit: BoxFit.contain,
                   ),
@@ -799,8 +781,6 @@ SliverPadding(
             color: const Color.fromARGB(255, 255, 238, 218),
             child: Column(children: [
                   Image.asset(
-                    height:120,
-                          width: 120,
                     'assets/mushroomSoup.png',
                     fit: BoxFit.contain,
                   ),

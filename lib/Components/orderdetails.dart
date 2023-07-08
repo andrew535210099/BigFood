@@ -42,11 +42,17 @@ class OrderListItem extends StatelessWidget {
         Container(
           width: 100,
           height: 100,
-          clipBehavior: Clip.antiAlias,
           decoration: BoxDecoration(
+            border: Border.all(
+              color: Colors.grey,
+              width: 1.0,
+            ),
             borderRadius: BorderRadius.circular(10.0),
           ),
-          child: item.image != null ? Image.network(item.image, fit: BoxFit.cover) : null,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10.0),
+            child: item.image != null ? Image.network(item.image, fit: BoxFit.cover) : null,
+          ),
         ),
         const SizedBox(
           width: 20.0,
@@ -89,6 +95,7 @@ class OrderListItem extends StatelessWidget {
     );
   }
 }
+
 
 class OrderDetaill extends StatefulWidget {
   @override
