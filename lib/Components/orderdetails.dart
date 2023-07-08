@@ -210,13 +210,17 @@ class _OrderDetaillState extends State<OrderDetaill> {
                     ),
                   ),
                   const SizedBox(height: 20.0),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: orderItems.length,
-                    itemBuilder: (context, index) {
-                      return OrderListItem(item: orderItems[index]);
-                    },
-                  ),
+                  ListView.separated(
+  shrinkWrap: true,
+  itemCount: orderItems.length,
+  itemBuilder: (context, index) {
+    return OrderListItem(item: orderItems[index]);
+  },
+  separatorBuilder: (context, index) {
+    return SizedBox(height: 10.0); // Menambahkan jarak vertikal antara item
+  },
+),
+
                   const SizedBox(height: 10.0),
                   _buildDivider(),
                   const SizedBox(height: 10.0),
