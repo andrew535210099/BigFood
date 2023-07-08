@@ -41,7 +41,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   void _signOut() async {
     await _auth.signOut();
-    Navigator.pop(context); // Kembali ke halaman sebelumnya setelah logout
+    print("User telah keluar");
+    Navigator.pushNamed(context, '/login');// Kembali ke halaman sebelumnya setelah logout
   }
 
   void _deleteAccount() async {

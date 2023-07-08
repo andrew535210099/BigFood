@@ -7,7 +7,14 @@ void main() {
   ));
 }
 
-class UploadProfilePage extends StatelessWidget {
+class UploadProfilePage extends StatefulWidget {
+  @override
+  _UploadProfilePageState createState() => _UploadProfilePageState();
+}
+
+class _UploadProfilePageState extends State<UploadProfilePage> {
+  late String imagePath; // Add the imagePath variable
+
   Future<void> _pickImage(BuildContext context) async {
     final XTypeGroup typeGroup = XTypeGroup(
       label: 'images',
@@ -19,9 +26,11 @@ class UploadProfilePage extends StatelessWidget {
     );
 
     if (pickedImages != null && pickedImages.isNotEmpty) {
-      // Image selected, do something with it
-      String imagePath = pickedImages[0].path;
-      // ...
+      // Selected image, update imagePath
+      setState(() {
+        imagePath = pickedImages[0].path;
+        print(imagePath);
+      });
     }
   }
 
@@ -36,8 +45,8 @@ class UploadProfilePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Text(
-                textAlign: TextAlign.center,
                 'Upload your photo \nprofile',
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 35,
                   fontWeight: FontWeight.bold,
@@ -58,11 +67,11 @@ class UploadProfilePage extends StatelessWidget {
                 height: 200.0,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Color.fromARGB(255, 194, 191, 191), // Ganti dengan warna abu-abu yang Anda inginkan
+                  color: Color.fromARGB(255, 194, 191, 191), // Replace with the desired gray color
                 ),
                 child: RawMaterialButton(
                   onPressed: () {
-                    _pickImage(context); // Panggil fungsi untuk memilih gambar
+                    _pickImage(context); // Call the function to pick an image
                   },
                   shape: CircleBorder(),
                   padding: EdgeInsets.all(24.0),
@@ -73,14 +82,13 @@ class UploadProfilePage extends StatelessWidget {
                   ),
                 ),
               ),
-
               SizedBox(height: 40.0),
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   UploadProfile(
                     onPressed: () {
-                      _pickImage(context); // Panggil fungsi untuk memilih gambar
+                      _pickImage(context); // Call the function to pick an image
                     },
                   ),
                 ],
@@ -88,7 +96,7 @@ class UploadProfilePage extends StatelessWidget {
               SizedBox(height: 20.0),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/setlocationpage');// Navigate to the next page
+                  Navigator.pushNamed(context, '/setlocationpage'); // Navigate to the next page
                 },
                 style: ElevatedButton.styleFrom(
                   primary: Color(int.parse('FF6440', radix: 16)).withOpacity(1.0),
@@ -117,7 +125,7 @@ class UploadProfile extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
       child: TextButton(
-        onPressed: onPressed, // Menggunakan callback onPressed yang diberikan
+        onPressed: onPressed, // Call the original onPressed function
         style: TextButton.styleFrom(
           primary: Colors.transparent,
           padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 100.0),
