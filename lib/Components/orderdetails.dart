@@ -19,6 +19,8 @@ class OrderDetail extends StatelessWidget {
   }
 }
 
+
+
 class OrderItem {
   final String title;
   final int qty;
@@ -178,6 +180,8 @@ class _OrderDetaillState extends State<OrderDetaill> {
           orderItems.add(orderItem3);
           orderItems.add(orderItem4);
           orderItems.add(orderItem5);
+          
+
         });
       } else {
         print('Properti tidak ditemukan di dokumen dengan ID ${doc.id}');
@@ -245,7 +249,7 @@ class _OrderDetaillState extends State<OrderDetaill> {
                             ),
                             Spacer(),
                             Text(
-                              "Rp berapa",
+                              "Rp ${calculateTotalPrice()}",
                               style: TextStyle(
                                 fontSize: 16.0,
                                 color: Color.fromARGB(255, 0, 0, 0),
@@ -337,4 +341,12 @@ class _OrderDetaillState extends State<OrderDetaill> {
       ),
     );
   }
+  
+  double calculateTotalPrice() {
+  double totalPrice = 0.0;
+  for (var item in orderItems) {
+    totalPrice += (item.qty * item.price);
+  }
+  return totalPrice;
+}
 }
