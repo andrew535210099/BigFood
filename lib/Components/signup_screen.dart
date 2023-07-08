@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -80,7 +81,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
         print('Registration successful');
       }
     } catch (error) {
-      print('Error signing up: $error');
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+    Fluttertoast.showToast(
+      msg: 'The email address is already in use by another account',
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      backgroundColor: Color(int.parse('FF6440', radix: 16)).withOpacity(1.0),
+      textColor: Colors.white,
+    );
+  });
       // Display error message or take appropriate action for the error
     }
   }
