@@ -10,12 +10,19 @@ void main() {
 }
 
 class HomeBar extends StatefulWidget {
+  final int currentIndex;
+
+  const HomeBar({Key? key, this.currentIndex = 0}) : super(key: key);
   @override
   State<HomeBar> createState() => _HomeBarState();
 }
 
 class _HomeBarState extends State<HomeBar> {
-  int currentIndex=0;
+  late int currentIndex;
+  void initState() {
+    super.initState();
+    currentIndex = widget.currentIndex;
+  }
   final screens=[
 HomePage(),
 OrderDetail(),

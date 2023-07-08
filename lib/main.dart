@@ -75,7 +75,11 @@ class MyApp extends StatelessWidget {
         '/signupsuccesspage' : (context) => SignUpSuccessPage(),
         '/setlocationpage' : (context) => SetLocationPage(),
         '/homepage' : (context) => HomePage(),
-        '/homebar' : (context) => HomeBar(),
+        '/homebar': (context) {
+      final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?; // Perhatikan penggunaan '?'
+      final currentIndex = args?['currentIndex'] as int? ?? 0; // Perhatikan penggunaan '?'
+      return HomeBar(currentIndex: currentIndex);
+    },
         '/firestore' : (context) => const TestFirestoreScreen(),
         '/profile1' : (context) =>  ProfileScreen(),
         '/deleteaccount' : (context) => const DeleteAccount(),

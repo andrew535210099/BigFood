@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import '../UserData/user_provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'homebar.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -202,6 +203,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       title: Text('My Orders'),
                       onTap: () {
                         // Action when My Orders is clicked
+                        Navigator.pushNamed(
+                          context,
+                          '/homebar',
+                          arguments: {'currentIndex': 1}, // Pindah ke tab ke-2 (indeks 1)
+                        );
                       },
                     ),
                     ListTile(
