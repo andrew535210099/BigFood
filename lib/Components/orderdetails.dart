@@ -39,63 +39,68 @@ class OrderListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 100,
-          height: 100,
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.grey,
-              width: 1.0,
+  return Row(
+    children: [
+      Container(
+        width: 100,
+        height: 100,
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Colors.grey,
+            width: 1.0,
+          ),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10.0),
+          child: item.image != null ? Image.network(item.image, fit: BoxFit.cover) : null,
+        ),
+      ),
+      const SizedBox(
+        width: 20.0,
+      ),
+      Expanded(
+        flex: 2,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              item.title,
+              style: TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 0, 0, 0),
+              ),
             ),
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(10.0),
-            child: item.image != null ? Image.network(item.image, fit: BoxFit.cover) : null,
-          ),
-        ),
-        const SizedBox(
-          width: 20.0,
-        ),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                item.title,
-                style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 0, 0, 0),
-                ),
+            const SizedBox(height: 5.0),
+            Text(
+              "${item.qty}",
+              style: TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 0, 0, 0),
               ),
-              const SizedBox(height: 5.0),
-              Text(
-                "${item.qty}",
-                style: TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 0, 0, 0),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
-        const SizedBox(width: 10.0),
-        Text(
-          "${item.price * item.qty}",
+      ),
+      const SizedBox(width: 10.0),
+      Container(
+        padding: EdgeInsets.only(right: 20.0), // Atur jarak tepi kanan di sini
+        child: Text(
+          "Rp ${item.price * item.qty}",
           style: TextStyle(
             fontSize: 16.0,
             fontWeight: FontWeight.bold,
             color: Color.fromARGB(255, 0, 0, 0),
           ),
         ),
-      ],
-    );
-  }
+      ),
+    ],
+  );
+}
+
 }
 
 
@@ -246,7 +251,7 @@ class _OrderDetaillState extends State<OrderDetaill> {
                         Row(
                           children: [
                             Text(
-                              "Ongkir",
+                              "Total ",
                               style: TextStyle(
                                 fontSize: 16.0,
                                 color: Color.fromARGB(255, 0, 0, 0),
@@ -274,7 +279,7 @@ class _OrderDetaillState extends State<OrderDetaill> {
                             ),
                             Spacer(),
                             Text(
-                              "Rp berapa",
+                              "Rp ${calculateOngkir()}",
                               style: TextStyle(
                                 fontSize: 16.0,
                                 color: Color.fromARGB(255, 0, 0, 0),
@@ -286,27 +291,28 @@ class _OrderDetaillState extends State<OrderDetaill> {
                         _buildDivider(),
                         const SizedBox(height: 10.0),
                         Row(
-                          children: [
-                            Text(
-                              "Total",
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 0, 0, 0),
-                              ),
-                            ),
-                            Spacer(),
-                            Text(
-                              "Rp total",
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 0, 0, 0),
-                              ),
-                            ),
-                            const SizedBox(width: 20.0),
-                          ],
-                        ),
+  children: [
+    Text(
+      "Total",
+      style: TextStyle(
+        fontSize: 16.0,
+        fontWeight: FontWeight.bold,
+        color: Color.fromARGB(255, 0, 0, 0),
+      ),
+    ),
+    Spacer(),
+    Text(
+      "Rp ${calculateTotalPrice() + calculateOngkir()}",
+      style: TextStyle(
+        fontSize: 16.0,
+        fontWeight: FontWeight.bold,
+        color: Color.fromARGB(255, 0, 0, 0),
+      ),
+    ),
+  ],
+),
+
+
                         const SizedBox(height: 10.0),
                         ElevatedButton(
                           onPressed: () {},
@@ -352,6 +358,11 @@ class _OrderDetaillState extends State<OrderDetaill> {
   for (var item in orderItems) {
     totalPrice += (item.qty * item.price);
   }
+  return totalPrice;
+}
+double calculateOngkir() {
+  double totalPrice = 9000;
+
   return totalPrice;
 }
 }
