@@ -137,7 +137,11 @@ class _UploadProfilePageState extends State<UploadProfilePage> {
               SizedBox(height: 20.0),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/setlocationpage');
+                  Navigator.pushNamed(
+                          context,
+                          '/homebar',
+                          arguments: {'currentIndex': 3}, // Pindah ke tab ke-2 (indeks 1)
+                        );
                 },
                 style: ElevatedButton.styleFrom(
                   primary: Color(int.parse('FF6440', radix: 16)).withOpacity(1.0),
