@@ -145,13 +145,12 @@ class _OrderDetaillState extends State<OrderDetaill> {
         int sandwichQuantity = data['sandwichQuantity'] as int;
         int pizzaRollQuantity = data['pizzaRollQuantity'] as int;
         int mushroomSoupQuantity = data['mushroomSoupQuantity'] as int;
-        int creamyBiscuitQuantity = data['creamyBiscuitQuantity'] as int;
 
         OrderItem orderItem = OrderItem(
           "Zinger Burger",
           zingerBurgerQuantity,
           20000,
-          "assets/zingerBurger.png",
+          "https://asset.kompas.com/crops/fP_Q5TD9BOn5G5JTnntgtDIjQMI=/53x36:933x623/750x500/data/photo/2021/10/21/6171492e1ea12.jpg",
         );
         OrderItem orderItem1 = OrderItem(
           "Roll Paratha",
@@ -183,12 +182,6 @@ class _OrderDetaillState extends State<OrderDetaill> {
           17000,
           'assets/mushroomSoup.png',
         );
-        OrderItem orderItem6 = OrderItem(
-          "Creamy Biscuit",
-          creamyBiscuitQuantity,
-          20000,
-          'assets/creamyBiscuit.png',
-        );
 
         setState(() {
           orderItems.add(orderItem);
@@ -197,8 +190,6 @@ class _OrderDetaillState extends State<OrderDetaill> {
           orderItems.add(orderItem3);
           orderItems.add(orderItem4);
           orderItems.add(orderItem5);
-          orderItems.add(orderItem6);
-          
 
         });
       } else {

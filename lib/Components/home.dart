@@ -716,7 +716,7 @@ SliverPadding(
                               Text(FakeName[index],
                               style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 5.0,
+                                      fontSize: 15.0,
                                     ),),
                                 SizedBox(height: 10.0,),    
                               Text(review[index]
