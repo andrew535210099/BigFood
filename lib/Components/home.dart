@@ -46,6 +46,21 @@ class _HomePageState extends State<HomePage> {
   int sandwichQuantity = 0;
   int pizzaRollQuantity = 0;
   int mushroomSoupQuantity = 0;
+  
+  List<String> FakeName = [
+    "Jane Lit",
+    "Red Dave",
+    "Patrick",
+    "Ashley",
+    "Mina",
+  ];
+  List<String> review = [
+  "The pizza was great!",
+  "I like the burgers!",
+  "A tasty treat!",
+  "Thanks BigFood!",
+  "Love it!",
+];
 
   @override
   void initState() {
@@ -672,7 +687,7 @@ SliverPadding(
                   delegate: SliverChildListDelegate([
                   
                     Text(
-                      'Desserts',
+                      'Review',
                       style: TextStyle(
                       fontSize: 24.0,
                       fontWeight: FontWeight.bold,
@@ -681,175 +696,44 @@ SliverPadding(
                   ]),
                 ),
     ),
-  SliverPadding(
-      padding: const EdgeInsets.all(20),
-      
-      sliver: SliverGrid.count(
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-        crossAxisCount: 2,
-        childAspectRatio: (1 / 1.1),
-        children: <Widget>[
-          // Zinger Burger
-          Container(
-            padding: const EdgeInsets.all(8),
-            color: const Color.fromARGB(255, 255, 238, 218),
-            child: Column(children: [
-                  Image.asset(
-                    'assets/creamyBiscuit.png',
-                    fit: BoxFit.contain,
-                  ),
-              Text("Creamy Biscuit",
-              style:TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 0, 0, 0),
+        
+          SliverToBoxAdapter(
+            child: Container(
+              height: 100.0,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 5,
+                itemBuilder: (context, index) {
+                  return 
+                  Container(
+                    width: 100.0,
+                    child: Card(
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              Text(FakeName[index],
+                              style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17.0,
+                                    ),),
+                                SizedBox(height: 10.0,),    
+                              Text(review[index]
+                              ,style: TextStyle(
+                                  
+                                      fontSize: 15.0,
+                                    )),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
+                  );
+                },
               ),
-                            Text("Rp 20.000",
-              style:TextStyle(
-                      fontSize: 17.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 255, 100, 64),
-                    ),
-              ),
-
-            ],),
+            ),
           ),
-          // Roll Paratha
-          Container(
-            padding: const EdgeInsets.all(8),
-            color: const Color.fromARGB(255, 255, 238, 218),
-            child: Column(children: [
-                  Image.asset(
-                    'assets/rollParatha.png',
-                    fit: BoxFit.contain,
-                  ),
-              Text("Roll Paratha",
-              style:TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 0, 0, 0),
-                    ),
-              ),
-                            Text("Rp 25.000",
-              style:TextStyle(
-                      fontSize: 17.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 255, 100, 64),
-                    ),
-              ),
-
-            ],),
-          ),/*
-        Container(
-            padding: const EdgeInsets.all(8),
-            color: const Color.fromARGB(255, 255, 238, 218),
-            child: Column(children: [
-                  Image.asset(
-                    'assets/burger.png',
-                    fit: BoxFit.contain,
-                  ),
-              Text("Burger",
-              style:TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 0, 0, 0),
-                    ),
-              ),
-                            Text("Rp 15.000",
-              style:TextStyle(
-                      fontSize: 17.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 255, 100, 64),
-                    ),
-              ),
-
-            ],),
-          ),
-        // Sandwich
-        Container(
-            padding: const EdgeInsets.all(8),
-            color: const Color.fromARGB(255, 255, 238, 218),
-            child: Column(children: [
-                  Image.asset(
-                    'assets/sandwich.png',
-                    fit: BoxFit.contain,
-                  ),
-              Text("Sandwich",
-              style:TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 0, 0, 0),
-                    ),
-              ),
-                            Text("Rp 20.000",
-              style:TextStyle(
-                      fontSize: 17.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 255, 100, 64),
-                    ),
-              ),
-
-            ],),
-          ),
-
-        Container(
-            padding: const EdgeInsets.all(8),
-            color: const Color.fromARGB(255, 255, 238, 218),
-            child: Column(children: [
-                  Image.asset(
-                    'assets/pizzaRoll.png',
-                    fit: BoxFit.contain,
-                  ),
-              Text("Pizza Roll",
-              style:TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 0, 0, 0),
-                    ),
-              ),
-              
-                            Text("Rp 22.000",
-              style:TextStyle(
-                      fontSize: 17.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 255, 100, 64),
-                    ),
-              ),
-
-            ],),
-          ),
-
-        Container(
-            padding: const EdgeInsets.all(8),
-            color: const Color.fromARGB(255, 255, 238, 218),
-            child: Column(children: [
-                  Image.asset(
-                    'assets/mushroomSoup.png',
-                    fit: BoxFit.contain,
-                  ),
-              Text("Mushroom Soup",
-              style:TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 0, 0, 0),
-                    ),
-              ),
-                            Text("Rp 17.000",
-              style:TextStyle(
-                      fontSize: 17.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 255, 100, 64),
-                    ),
-              ),
-
-            ],),
-            
-          ),*/
-        ],
-      ),
-    ),
 
   ],
 ),
