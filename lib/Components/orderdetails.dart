@@ -57,9 +57,13 @@ class OrderListItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(10.0),
-          child: item.image != null ? Image.network(item.image, fit: BoxFit.cover) : null,
-        ),
+  borderRadius: BorderRadius.circular(10.0),
+  child: item.image != null ? Image(
+    image: AssetImage(item.image),
+    fit: BoxFit.cover,
+  ) : null,
+),
+
       ),
       const SizedBox(
         width: 20.0,
