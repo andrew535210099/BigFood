@@ -16,6 +16,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   late User _user;
+  late String imagePath;
+  String? photoURL;
 
   @override
   void initState() {
@@ -35,6 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       setState(() {
         userProvider.setUsername(userData['username']);
         userProvider.setEmail(userData['email']);
+        photoURL = userData['photoURL'];
       });
     }
   }
