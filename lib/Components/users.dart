@@ -12,8 +12,11 @@ class UsersPage extends StatelessWidget {
   Widget _buildAvatar(types.User user) {
     final color = getUserAvatarNameColor(user);
     final hasImage = user.imageUrl != null;
-    final name = getUserName(user);
-
+    String name = getUserName(user);
+    int maxLength = 30;
+    if(name.length > maxLength) {
+      name=name.substring(0,maxLength)+"...";
+    }
     return Container(
       margin: const EdgeInsets.only(right: 16),
       child: CircleAvatar(
