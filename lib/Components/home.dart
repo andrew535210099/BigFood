@@ -46,6 +46,7 @@ class _HomePageState extends State<HomePage> {
   int sandwichQuantity = 0;
   int pizzaRollQuantity = 0;
   int mushroomSoupQuantity = 0;
+  int creamyBiscuitQuantity = 0;
 
   @override
   void initState() {
@@ -152,6 +153,23 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+
+  void incrementCreamyBiscuitQuantity() {
+    setState(() {
+      creamyBiscuitQuantity++;
+      updateCart();
+    });
+  }
+
+  void decrementCreamyBiscuitQuantity() {
+    setState(() {
+      if (creamyBiscuitQuantity > 0) {
+        creamyBiscuitQuantity--;
+        updateCart();
+      }
+    });
+  }
+
 void updateCart() async {
   _user = _auth.currentUser!;
   final String userUID = _user.uid;
@@ -170,6 +188,7 @@ void updateCart() async {
         'mushroomSoupQuantity': mushroomSoupQuantity,
         'zingerBurgerQuantity': zingerBurgerQuantity,
         'rollParathaQuantity': rollParathaQuantity,
+        'creamyBiscuitQuantity': creamyBiscuitQuantity,
       });
     } else {
       await cartRef.doc(userUID).set({
@@ -180,6 +199,7 @@ void updateCart() async {
         'mushroomSoupQuantity': mushroomSoupQuantity,
         'zingerBurgerQuantity': zingerBurgerQuantity,
         'rollParathaQuantity': rollParathaQuantity,
+        'creamyBiscuitQuantity': creamyBiscuitQuantity,
       });
     }
   } catch (e) {
@@ -203,7 +223,8 @@ void addToCart() async {
       pizzaRollQuantity = cartData['pizzaRollQuantity'] ?? 0;
       mushroomSoupQuantity = cartData['mushroomSoupQuantity'] ?? 0;
       zingerBurgerQuantity = cartData['zingerBurgerQuantity'] ?? 0;
-      rollParathaQuantity = cartData['rollParathaQuantity'] ?? 0;
+      rollParathaQuantity = cartData['rollParathaQuantity'] ?? 0;      
+      creamyBiscuitQuantity = cartData['creamyBiscuitQuantity'] ?? 0;
     } else {
       await cartRef.doc(userUID).set({
         'email': userEmail, // Simpan email pengguna di dokumen keranjang
@@ -219,6 +240,8 @@ void addToCart() async {
         'zingerBurgerPrice': 20000,
         'rollParathaQuantity': rollParathaQuantity,
         'rollParathaPrice': 25000,
+        'creamyBiscuitQuantity': creamyBiscuitQuantity,
+        'creamyBiscuitPrice': 20000,
       });
     }
   } catch (e) {
@@ -256,7 +279,8 @@ void addToCart() async {
           final int pizzaRollQuantity = cartData['pizzaRollQuantity'] ?? 0;
           final int mushroomSoupQuantity = cartData['mushroomSoupQuantity'] ?? 0;
           final int zingerBurgerQuantity = cartData['zingerBurgerQuantity'] ?? 0;
-          final int rollParathaQuantity = cartData['rollParathaQuantity'] ?? 0;
+          final int rollParathaQuantity = cartData['rollParathaQuantity'] ?? 0;          
+          final int creamyBiscuitQuantity = cartData['creamyBiscuitQuantity'] ?? 0;
 
           // Lakukan sesuatu dengan data yang telah diambil
           print('Burger Quantity: $burgerQuantity');
@@ -265,14 +289,15 @@ void addToCart() async {
           print('Mushroom Soup Quantity: $mushroomSoupQuantity');
           print('Zinger Burger Quantity: $zingerBurgerQuantity');
           print('Roll Paratha Quantity: $rollParathaQuantity');
-
+          print('Creamy Biscuit Quantity: $creamyBiscuitQuantity');
            userProvider.updateCartData({
             'burgerQuantity': burgerQuantity,
             'sandwichQuantity': sandwichQuantity,
             'pizzaRollQuantity': pizzaRollQuantity,
             'mushroomSoupQuantity': mushroomSoupQuantity,
             'zingerBurgerQuantity': zingerBurgerQuantity,
-            'rollParathaQuantity': rollParathaQuantity,
+            'rollParathaQuantity': rollParathaQuantity,            
+            'creamyBiscuitQuantity': creamyBiscuitQuantity,
           });
         
         } else {
@@ -697,7 +722,8 @@ SliverPadding(
             child: Column(children: [
                   Image.asset(
                     'assets/creamyBiscuit.png',
-                    fit: BoxFit.contain,
+                    height: 200,
+                    width: 200,
                   ),
               Text("Creamy Biscuit",
               style:TextStyle(
@@ -713,6 +739,26 @@ SliverPadding(
                       color: Color.fromARGB(255, 255, 100, 64),
                     ),
               ),
+              Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.remove),
+                              onPressed: decrementCreamyBiscuitQuantity,
+                            ),
+                            Text(
+                              creamyBiscuitQuantity.toString(),
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.add),
+                              onPressed: incrementCreamyBiscuitQuantity,
+                            ),
+                          ],
+                        ),
 
             ],),
           ),
@@ -739,6 +785,27 @@ SliverPadding(
                       color: Color.fromARGB(255, 255, 100, 64),
                     ),
               ),
+              
+              Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.remove),
+                              onPressed: decrementRollParathaQuantity,
+                            ),
+                            Text(
+                              rollParathaQuantity.toString(),
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.add),
+                              onPressed: incrementRollParathaQuantity,
+                            ),
+                          ],
+                        ),
 
             ],),
           ),/*

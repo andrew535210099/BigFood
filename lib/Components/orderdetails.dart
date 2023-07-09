@@ -145,6 +145,7 @@ class _OrderDetaillState extends State<OrderDetaill> {
         int sandwichQuantity = data['sandwichQuantity'] as int;
         int pizzaRollQuantity = data['pizzaRollQuantity'] as int;
         int mushroomSoupQuantity = data['mushroomSoupQuantity'] as int;
+        int creamyBiscuitQuantity = data['creamyBiscuitQuantity'] as int;
 
         OrderItem orderItem = OrderItem(
           "Zinger Burger",
@@ -179,8 +180,14 @@ class _OrderDetaillState extends State<OrderDetaill> {
         OrderItem orderItem5 = OrderItem(
           "Mushroom Soup",
           mushroomSoupQuantity,
-          10000,
+          17000,
           'assets/mushroomSoup.png',
+        );
+        OrderItem orderItem6 = OrderItem(
+          "Creamy Biscuit",
+          creamyBiscuitQuantity,
+          20000,
+          'assets/creamyBiscuit.png',
         );
 
         setState(() {
@@ -190,6 +197,7 @@ class _OrderDetaillState extends State<OrderDetaill> {
           orderItems.add(orderItem3);
           orderItems.add(orderItem4);
           orderItems.add(orderItem5);
+          orderItems.add(orderItem6);
           
 
         });
