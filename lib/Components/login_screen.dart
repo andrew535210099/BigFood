@@ -202,7 +202,7 @@ String hashPassword(String password) {
                             alignment: Alignment.centerRight,
                             child: GestureDetector(
                               onTap: () {
-                                Navigator.pushNamed(context, '/viamethod');
+                                Navigator.pushNamed(context, '/resetpass');
                               },
                               child: Text(
                                 'Forget Password?',

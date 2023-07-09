@@ -84,6 +84,10 @@ class _LoginScreenState extends State<ResetPasswordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 255, 100, 64),
+          title: const Text('Reset Password'),
+      ),
       body: SingleChildScrollView(
         child: Container(
           decoration: BoxDecoration(
@@ -136,7 +140,7 @@ class _LoginScreenState extends State<ResetPasswordPage> {
                           SizedBox(height: 15.0),
                           Text(
                             textAlign: TextAlign.center,
-                            'Enter your new password and then confirm new password',
+                            'Enter your email and we will send password changes',
                             style: TextStyle(
                               fontSize: 15.0,
                             ),
@@ -157,6 +161,7 @@ class _LoginScreenState extends State<ResetPasswordPage> {
                             child: ElevatedButton(
                               onPressed: () {
                                 resetPassword();// Tambahkan logika untuk tombol login di sini
+                                Navigator.pushNamed(context, '/login');
                               },
                               child: Text(
                                 'Continue',
