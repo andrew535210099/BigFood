@@ -672,7 +672,7 @@ SliverPadding(
                   delegate: SliverChildListDelegate([
                   
                     Text(
-                      'Popular Menu',
+                      'Desserts',
                       style: TextStyle(
                       fontSize: 24.0,
                       fontWeight: FontWeight.bold,
@@ -696,10 +696,10 @@ SliverPadding(
             color: const Color.fromARGB(255, 255, 238, 218),
             child: Column(children: [
                   Image.asset(
-                    'assets/zingerBurger.png',
+                    'assets/creamyBiscuit.png',
                     fit: BoxFit.contain,
                   ),
-              Text("Zinger Burger",
+              Text("Creamy Biscuit",
               style:TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
@@ -741,7 +741,7 @@ SliverPadding(
               ),
 
             ],),
-          ),
+          ),/*
         Container(
             padding: const EdgeInsets.all(8),
             color: const Color.fromARGB(255, 255, 238, 218),
@@ -846,7 +846,7 @@ SliverPadding(
 
             ],),
             
-          ),
+          ),*/
         ],
       ),
     ),
