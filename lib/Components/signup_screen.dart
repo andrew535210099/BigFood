@@ -98,6 +98,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 255, 100, 64),
+          systemOverlayStyle: SystemUiOverlayStyle.light,
+          title: const Text('Register'),
+        ),
       body: SingleChildScrollView(
         child: Container(
           decoration: BoxDecoration(

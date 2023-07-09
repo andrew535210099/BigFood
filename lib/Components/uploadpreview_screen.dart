@@ -156,7 +156,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
 
 
-                        // SizedBox(width: 16.0),
+                        SizedBox(width: 16.0),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -164,23 +164,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   username,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                  
+                                    fontSize: 20.0,
                                   ),
                                   softWrap: false,
                                 maxLines: 1,
+                                
                                 overflow: TextOverflow.ellipsis, // new
                                 ),
                             SizedBox(height: 10),
-                             Text(
-                                  email,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
+                            //  Text(
+                            //       email,
+                            //       style: TextStyle(
+                            //         fontWeight: FontWeight.bold,
                                    
-                                  ),
-                                   softWrap: false,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis, // new
-                                ),
+                            //       ),
+                            //        softWrap: false,
+                            //     maxLines: 1,
+                            //     overflow: TextOverflow.ellipsis, // new
+                            //     ),
                             SizedBox(height: 10),
                             // Text(
                             //   'Nomor Telepon',

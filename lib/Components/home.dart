@@ -336,7 +336,7 @@ void addToCart() async {
                       ),
                     Expanded(
                       child: Text(
-                        'View More',
+                        '',
                         textAlign: TextAlign.right,
                         style: TextStyle(
                           fontSize: 18.0,
