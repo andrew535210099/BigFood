@@ -47,15 +47,27 @@ class PaymentMethodPage extends StatelessWidget {
                 children: <Widget>[
                   PaymentOptionTile(
                     icon: Icons.attach_money,
-                    title: 'Cash', onTap: () {  },
+                    title: 'Cash', onTap: () { Navigator.pushNamed(
+                          context,
+                          '/homebar',
+                          arguments: {'currentIndex': 3}, // Pindah ke tab ke-2 (indeks 1)
+                        ); },
                   ),
                   PaymentOptionTile(
                     icon: Icons.credit_card,
-                    title: 'Card', onTap: () {  },
+                    title: 'Card', onTap: () { Navigator.pushNamed(
+                          context,
+                          '/homebar',
+                          arguments: {'currentIndex': 3}, // Pindah ke tab ke-2 (indeks 1)
+                        ); },
                   ),
                   PaymentOptionTile(
                     icon: Icons.business,
-                    title: 'Third Party', onTap: () {  },
+                    title: 'Third Party', onTap: () { Navigator.pushNamed(
+                          context,
+                          '/homebar',
+                          arguments: {'currentIndex': 3}, // Pindah ke tab ke-2 (indeks 1)
+                        ); },
                   ),
                 ],
               ),
