@@ -1,10 +1,7 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
@@ -16,8 +13,6 @@ void main() async {
 }
 
 class UploadProfilePage extends StatefulWidget {
-  get photoURL => null;
-
   @override
   _UploadProfilePageState createState() => _UploadProfilePageState();
 }
@@ -39,7 +34,7 @@ class _UploadProfilePageState extends State<UploadProfilePage> {
     if (pickedImages != null && pickedImages.isNotEmpty) {
       setState(() {
         imagePath = pickedImages[0].path;
-
+        print(imagePath);
       });
 
       await _uploadProfilePhoto();
@@ -47,44 +42,33 @@ class _UploadProfilePageState extends State<UploadProfilePage> {
   }
 
   Future<void> _uploadProfilePhoto() async {
-  User? user = FirebaseAuth.instance.currentUser;
-  final email = user?.email;
-  if (user != null) {
-    try {
-      // Upload gambar ke Firebase Storage
-      Reference storageReference = FirebaseStorage.instance.ref().child('profile_images/${user.uid}');
-      UploadTask uploadTask = storageReference.putFile(File(imagePath));
-      TaskSnapshot taskSnapshot = await uploadTask;
-      String downloadURL = await taskSnapshot.ref.getDownloadURL();
+    User? user = FirebaseAuth.instance.currentUser;
+    final email = user?.email;
+    if (user != null) {
+      try {
+        await user.updatePhotoURL(imagePath);
+        print('Foto profil berhasil diunggah');
 
-      // Perbarui URL foto profil pengguna di Firebase Authentication
-      await user.updatePhotoURL(downloadURL);
-      print('Foto profil berhasil diunggah');
+        var usersRef = FirebaseFirestore.instance.collection('users');
+        var querySnapshot = await usersRef.where('email', isEqualTo: email).get();
 
-      // Perbarui URL foto profil pengguna di Firestore
-      var usersRef = FirebaseFirestore.instance.collection('users');
-      var querySnapshot = await usersRef.where('email', isEqualTo: email).get();
+        if (querySnapshot.docs.isNotEmpty) {
+          var doc = querySnapshot.docs.first;
+          await doc.reference.update({'photoURL': imagePath});
+        }
 
-      if (querySnapshot.docs.isNotEmpty) {
-        var doc = querySnapshot.docs.first;
-        await doc.reference.update({'photoURL': user.photoURL});
+        getUserPhotoURL();
+      } catch (error) {
+        print('Gagal mengunggah foto profil: $error');
       }
-
-      getUserPhotoURL();
-    } catch (error) {
-      print('Gagal mengunggah foto profil: $error');
     }
   }
-}
-
-
 
   Future<void> getUserPhotoURL() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       setState(() {
         photoURL = user.photoURL;
-        print(photoURL);
       });
     }
   }
@@ -153,15 +137,7 @@ class _UploadProfilePageState extends State<UploadProfilePage> {
               SizedBox(height: 20.0),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(
-  context,
-  '/homebar',
-  arguments: {
-    'currentIndex': 3,
-    'photoURL': widget.photoURL, // Pass the photoURL parameter
-  },
-);
-
+                  Navigator.pushNamed(context, '/setlocationpage');
                 },
                 style: ElevatedButton.styleFrom(
                   primary: Color(int.parse('FF6440', radix: 16)).withOpacity(1.0),
