@@ -48,6 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
             await db.collection('users').doc(user!.uid).get();
         final username = userSnapshot.get('username');
         final email = userSnapshot.get('email');
+        final photo = userSnapshot.get('photoURL');
 
         // Set the username in the userProvider
         final userProvider = Provider.of<UserProvider>(context, listen: false);

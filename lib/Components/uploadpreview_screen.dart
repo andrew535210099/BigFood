@@ -7,6 +7,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'homebar.dart';
 
 class ProfileScreen extends StatefulWidget {
+
+  final String? photoURL;
+  
+  const ProfileScreen({this.photoURL});
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
@@ -38,6 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         userProvider.setUsername(userData['username']);
         userProvider.setEmail(userData['email']);
         photoURL = userData['photoURL'];
+        print(photoURL);
       });
     }
   }
@@ -139,12 +144,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Stack(
                   children: [
                     Row(
-                      
                       children: [
                         CircleAvatar(
-                          radius: 60.0,
-                          backgroundImage: AssetImage('assets/bg-welcome.jpg'),
-                        ),
+  radius: 80.0,
+  backgroundImage: photoURL != null ? NetworkImage(photoURL!) : null,
+),
+
+
                         SizedBox(width: 16.0),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
