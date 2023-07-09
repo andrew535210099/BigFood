@@ -56,14 +56,13 @@ class OrderListItem extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(10.0),
         ),
-        child: ClipRRect(
+child: ClipRRect(
   borderRadius: BorderRadius.circular(10.0),
   child: item.image != null ? Image(
     image: AssetImage(item.image),
     fit: BoxFit.cover,
   ) : null,
 ),
-
       ),
       const SizedBox(
         width: 20.0,
@@ -154,7 +153,7 @@ class _OrderDetaillState extends State<OrderDetaill> {
           "Zinger Burger",
           zingerBurgerQuantity,
           20000,
-          "https://asset.kompas.com/crops/fP_Q5TD9BOn5G5JTnntgtDIjQMI=/53x36:933x623/750x500/data/photo/2021/10/21/6171492e1ea12.jpg",
+          "assets/zingerBurger.png",
         );
         OrderItem orderItem1 = OrderItem(
           "Roll Paratha",
@@ -194,6 +193,7 @@ class _OrderDetaillState extends State<OrderDetaill> {
           orderItems.add(orderItem3);
           orderItems.add(orderItem4);
           orderItems.add(orderItem5);
+          
 
         });
       } else {
