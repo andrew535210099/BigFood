@@ -46,7 +46,6 @@ class _HomePageState extends State<HomePage> {
   int sandwichQuantity = 0;
   int pizzaRollQuantity = 0;
   int mushroomSoupQuantity = 0;
-  int creamyBiscuitQuantity = 0;
 
   @override
   void initState() {
@@ -697,7 +696,7 @@ SliverPadding(
                   delegate: SliverChildListDelegate([
                   
                     Text(
-                      'Desserts',
+                      'Review',
                       style: TextStyle(
                       fontSize: 24.0,
                       fontWeight: FontWeight.bold,
@@ -722,8 +721,7 @@ SliverPadding(
             child: Column(children: [
                   Image.asset(
                     'assets/creamyBiscuit.png',
-                    height: 200,
-                    width: 200,
+                    fit: BoxFit.contain,
                   ),
               Text("Creamy Biscuit",
               style:TextStyle(
@@ -739,26 +737,6 @@ SliverPadding(
                       color: Color.fromARGB(255, 255, 100, 64),
                     ),
               ),
-              Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            IconButton(
-                              icon: Icon(Icons.remove),
-                              onPressed: decrementCreamyBiscuitQuantity,
-                            ),
-                            Text(
-                              creamyBiscuitQuantity.toString(),
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.add),
-                              onPressed: incrementCreamyBiscuitQuantity,
-                            ),
-                          ],
-                        ),
 
             ],),
           ),
@@ -785,27 +763,6 @@ SliverPadding(
                       color: Color.fromARGB(255, 255, 100, 64),
                     ),
               ),
-              
-              Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            IconButton(
-                              icon: Icon(Icons.remove),
-                              onPressed: decrementRollParathaQuantity,
-                            ),
-                            Text(
-                              rollParathaQuantity.toString(),
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.add),
-                              onPressed: incrementRollParathaQuantity,
-                            ),
-                          ],
-                        ),
 
             ],),
           ),/*
@@ -831,92 +788,6 @@ SliverPadding(
                       color: Color.fromARGB(255, 255, 100, 64),
                     ),
               ),
-
-            ],),
-          ),
-        // Sandwich
-        Container(
-            padding: const EdgeInsets.all(8),
-            color: const Color.fromARGB(255, 255, 238, 218),
-            child: Column(children: [
-                  Image.asset(
-                    'assets/sandwich.png',
-                    fit: BoxFit.contain,
-                  ),
-              Text("Sandwich",
-              style:TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 0, 0, 0),
-                    ),
-              ),
-                            Text("Rp 20.000",
-              style:TextStyle(
-                      fontSize: 17.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 255, 100, 64),
-                    ),
-              ),
-
-            ],),
-          ),
-
-        Container(
-            padding: const EdgeInsets.all(8),
-            color: const Color.fromARGB(255, 255, 238, 218),
-            child: Column(children: [
-                  Image.asset(
-                    'assets/pizzaRoll.png',
-                    fit: BoxFit.contain,
-                  ),
-              Text("Pizza Roll",
-              style:TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 0, 0, 0),
-                    ),
-              ),
-              
-                            Text("Rp 22.000",
-              style:TextStyle(
-                      fontSize: 17.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 255, 100, 64),
-                    ),
-              ),
-
-            ],),
-          ),
-
-        Container(
-            padding: const EdgeInsets.all(8),
-            color: const Color.fromARGB(255, 255, 238, 218),
-            child: Column(children: [
-                  Image.asset(
-                    'assets/mushroomSoup.png',
-                    fit: BoxFit.contain,
-                  ),
-              Text("Mushroom Soup",
-              style:TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 0, 0, 0),
-                    ),
-              ),
-                            Text("Rp 17.000",
-              style:TextStyle(
-                      fontSize: 17.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 255, 100, 64),
-                    ),
-              ),
-
-            ],),
-            
-          ),*/
-        ],
-      ),
-    ),
 
   ],
 ),
