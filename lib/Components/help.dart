@@ -68,7 +68,7 @@ List<Step> getSteps() {
         'Untuk kendala pembayaran, anda bisa menghubungi bigfood@gmail.com atau hubungi cs kami 08...'),
     Step(
         'Aplikasi tidak dapat terbuka, tiba tiba tertutup atau muncul kode error',
-        ''),
+        'Perhatikan informasi yang diberikan dari error, pastikan benar'),
     Step('Saya tidak mendapatkan email untuk reset password',
         '1. Pastikan email anda benar, 2. Anda bisa `refresh` halaman email anda, 3. Anda juga bisa cek halaman `all mail` di email anda'),
     Step('Akun saya terblokir',
@@ -78,12 +78,12 @@ List<Step> getSteps() {
     Step('Bisakah saya menghapus riwayat pemesanan saya?',
         'Tidak, anda tidak dapat menghapus riwayat pemesanan anda'),
     Step('Bagaimana cara mengajukan keluhan?',
-        'ini nanti kek buat email aja, misal bigfood@gmail.com, jadi lapor kesini'),
-    Step('Lapor biaya tambahan', 'jadi nanti kek gini hasilnya, diline bawah'),
+        'Dapat melaporkan ke bigfood@gmail.com'),
+    Step('Bagaimana kontak driver?', 'Dapat melalui fitur Chat'),
     Step('Lapor kendala pembayaran',
         'Untuk kendala pembayaran, anda bisa menghubungi bigfood@gmail.com atau hubungi cs kami 08...'),
     Step('Bagaimana cara melakukan check out pesanan saya?',
-        'Untuk melakukan checkout pesanan, anda dapat klik halaman `checkou` pada aplikasi kami, lalu anda bisa melakukan pembayaran untuk checkout'),
+        'Untuk melakukan checkout pesanan, anda dapat klik halaman `checkout` pada aplikasi kami, lalu anda bisa melakukan pembayaran untuk checkout'),
   ];
 }
 
