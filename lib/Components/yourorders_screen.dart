@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'orderdetails.dart';
+import 'homebar.dart';
 import '../UserData/user_provider.dart';
 
 void main() {
@@ -209,34 +211,20 @@ class _OrderDetaillState extends State<OrderDetaill> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Scaffold(
-            appBar:AppBar(
-  title: Text(
-    'Your Order',
-    style: TextStyle(fontSize: 24.0), // Ubah ukuran font sesuai keinginan Anda
-  ),
-  backgroundColor: Color(int.parse('FF6440', radix: 16)).withOpacity(1.0),
-  leading: IconButton(
-    icon: Icon(Icons.arrow_back),
-    onPressed: () {
-                        Navigator.pushNamed(
-                          context,
-                          '/homebar',
-                          arguments: {'currentIndex': 0}, // Pindah ke tab ke-2 (indeks 1)
-                        );// Kembali ke halaman sebelumnya
-    },
-  ),
-  toolbarHeight: 70, toolbarTextStyle: TextTheme(
-    headline6: TextStyle(
-      fontSize: 20.0, // Ubah ukuran font tulisan AppBar sesuai keinginan Anda
-      color: Colors.white, // Ubah warna tulisan AppBar sesuai keinginan Anda
-    ),
-  ).bodyText2, titleTextStyle: TextTheme(
-    headline6: TextStyle(
-      fontSize: 20.0, // Ubah ukuran font tulisan AppBar sesuai keinginan Anda
-      color: Colors.white, // Ubah warna tulisan AppBar sesuai keinginan Anda
-    ),
-  ).headline6,
-),
+          appBar: AppBar(
+            backgroundColor: const Color.fromARGB(255, 255, 100, 64),
+            title: const Text('Your Orders'),
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+ Navigator.push(
+      context,
+      new MaterialPageRoute(
+        builder: (context) => new OrderDetail(),
+      ),
+    );
+              },
+            )),
 
             body: Stack(
               children: [
@@ -247,26 +235,28 @@ class _OrderDetaillState extends State<OrderDetaill> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(20.0),
-                  child: ListView(
-                    children: [
-                      const SizedBox(height: 20.0),
-                      ListView.separated(
-                        shrinkWrap: true,
-                        itemCount: orderItems.length,
-                        itemBuilder: (context, index) {
-                          if (orderItems[index].qty == 0) {
-                            return SizedBox();
-                          }
-                          return OrderListItem(item: orderItems[index]);
-                        },
-                        separatorBuilder: (context, index) {
-                          return SizedBox(height: 10.0);
-                        },
-                      ),
-                      const SizedBox(height: 10.0),
-                      const SizedBox(height: 10.0),
-                      
-                    ],
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 20.0),
+                        ListView.separated(
+                          shrinkWrap: true,
+                          itemCount: orderItems.length,
+                          itemBuilder: (context, index) {
+                            if (orderItems[index].qty == 0) {
+                              return SizedBox();
+                            }
+                            return OrderListItem(item: orderItems[index]);
+                          },
+                          separatorBuilder: (context, index) {
+                            return SizedBox(height: 10.0);
+                          },
+                        ),
+                        const SizedBox(height: 10.0),
+                        const SizedBox(height: 10.0),
+                        
+                      ],
+                    ),
                   ),
                 ),
               ],

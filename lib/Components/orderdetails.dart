@@ -326,8 +326,13 @@ class _OrderDetaillState extends State<OrderDetaill> {
                               ),
                               const SizedBox(height: 10.0),
                               ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(context, '/orderlast');
+                                onPressed: () {                         
+ Navigator.push(
+      context,
+      new MaterialPageRoute(
+        builder: (context) => new yourOrders(),
+      ),
+    );
                                 },
                                 style: ElevatedButton.styleFrom(
                                   primary:
