@@ -4,10 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:duds/UserData/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/widgets.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -76,6 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
             await db.collection('users').doc(user!.uid).get();
         final username = userSnapshot.get('username');
         final email = userSnapshot.get('email');
+        final photo = userSnapshot.get('photoURL');
 
         // Set the username in the userProvider
         final userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -89,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
     // Handle error
     }catch(error){
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+       WidgetsBinding.instance.addPostFrameCallback((_) {
     Fluttertoast.showToast(
       msg: 'Error logging in: $error',
       toastLength: Toast.LENGTH_SHORT,
@@ -201,7 +202,7 @@ String hashPassword(String password) {
                             alignment: Alignment.centerRight,
                             child: GestureDetector(
                               onTap: () {
-                                Navigator.pushNamed(context, '/viamethod');
+                                Navigator.pushNamed(context, '/resetpass');
                               },
                               child: Text(
                                 'Forget Password?',

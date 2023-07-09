@@ -5,6 +5,10 @@ class ViaMethodScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+          appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 255, 100, 64),
+          title: const Text('Forget Password'),
+      ),
       body: SingleChildScrollView(
         child: Container(
           decoration: BoxDecoration(
@@ -55,40 +59,40 @@ class ViaMethodScreen extends StatelessWidget {
                           ),
                           SizedBox(height: 15.0),
                           Text(
-                            'Select which contact details \nshould we use to reset your \npassword',
+                            'Did you forget your password? That\'s okay! Just send your email!',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 15.0,
                             ),
                           ),
-                          SizedBox(height: 25.0),
-                          BoxWrapper(
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  // Logic for SMS button
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  primary: Color.fromARGB(255, 192, 192, 192),
-                                  minimumSize: Size(double.infinity, 48.0),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Row(
-                                    children: [
-                                      Icon(Icons.sms),
-                                      SizedBox(width: 10.0),
-                                      Text(
-                                        'Via SMS',
-                                        style: TextStyle(fontSize: 16.0),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
+                          // SizedBox(height: 25.0),
+                          // BoxWrapper(
+                          //   child: Align(
+                          //     alignment: Alignment.centerLeft,
+                          //     child: ElevatedButton(
+                          //       onPressed: () {
+                          //         // Logic for SMS button
+                          //       },
+                          //       style: ElevatedButton.styleFrom(
+                          //         primary: Color.fromARGB(255, 192, 192, 192),
+                          //         minimumSize: Size(double.infinity, 48.0),
+                          //       ),
+                          //       child: Padding(
+                          //         padding: const EdgeInsets.all(16.0),
+                          //         child: Row(
+                          //           children: [
+                          //             Icon(Icons.sms),
+                          //             SizedBox(width: 10.0),
+                          //             Text(
+                          //               'Via SMS',
+                          //               style: TextStyle(fontSize: 16.0),
+                          //             ),
+                          //           ],
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                           SizedBox(height: 10.0),
                           BoxWrapper(
                             child: Align(

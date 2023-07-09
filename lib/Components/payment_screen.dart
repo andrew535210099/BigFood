@@ -70,7 +70,7 @@ class PaymentMethodPage extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 16.0),
               ),
               child: Text(
-                'Next',
+                'Confirm Changes',
                 style: TextStyle(fontSize: 18.0),
               ),
             ),

@@ -1,19 +1,30 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_selector/file_selector.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MaterialApp(
     home: UploadProfilePage(),
   ));
 }
 
 class UploadProfilePage extends StatefulWidget {
+  get photoURL => null;
+
   @override
   _UploadProfilePageState createState() => _UploadProfilePageState();
 }
 
 class _UploadProfilePageState extends State<UploadProfilePage> {
-  late String imagePath; // Add the imagePath variable
+  late String imagePath;
+  String? photoURL;
 
   Future<void> _pickImage(BuildContext context) async {
     final XTypeGroup typeGroup = XTypeGroup(
@@ -26,12 +37,62 @@ class _UploadProfilePageState extends State<UploadProfilePage> {
     );
 
     if (pickedImages != null && pickedImages.isNotEmpty) {
-      // Selected image, update imagePath
       setState(() {
         imagePath = pickedImages[0].path;
-        print(imagePath);
+
+      });
+
+      await _uploadProfilePhoto();
+    }
+  }
+
+  Future<void> _uploadProfilePhoto() async {
+  User? user = FirebaseAuth.instance.currentUser;
+  final email = user?.email;
+  if (user != null) {
+    try {
+      // Upload gambar ke Firebase Storage
+      Reference storageReference = FirebaseStorage.instance.ref().child('profile_images/${user.uid}');
+      UploadTask uploadTask = storageReference.putFile(File(imagePath));
+      TaskSnapshot taskSnapshot = await uploadTask;
+      String downloadURL = await taskSnapshot.ref.getDownloadURL();
+
+      // Perbarui URL foto profil pengguna di Firebase Authentication
+      await user.updatePhotoURL(downloadURL);
+      print('Foto profil berhasil diunggah');
+
+      // Perbarui URL foto profil pengguna di Firestore
+      var usersRef = FirebaseFirestore.instance.collection('users');
+      var querySnapshot = await usersRef.where('email', isEqualTo: email).get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        var doc = querySnapshot.docs.first;
+        await doc.reference.update({'photoURL': user.photoURL});
+      }
+
+      getUserPhotoURL();
+    } catch (error) {
+      print('Gagal mengunggah foto profil: $error');
+    }
+  }
+}
+
+
+
+  Future<void> getUserPhotoURL() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      setState(() {
+        photoURL = user.photoURL;
+        print(photoURL);
       });
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserPhotoURL();
   }
 
   @override
@@ -65,21 +126,17 @@ class _UploadProfilePageState extends State<UploadProfilePage> {
               Container(
                 width: 200.0,
                 height: 200.0,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Color.fromARGB(255, 194, 191, 191), // Replace with the desired gray color
-                ),
-                child: RawMaterialButton(
-                  onPressed: () {
-                    _pickImage(context); // Call the function to pick an image
-                  },
-                  shape: CircleBorder(),
-                  padding: EdgeInsets.all(24.0),
-                  child: Icon(
-                    Icons.person,
-                    size: 150.0,
-                    color: Color.fromARGB(255, 117, 116, 116),
-                  ),
+                child: CircleAvatar(
+                  backgroundColor: Color.fromARGB(255, 194, 191, 191),
+                  radius: 100.0,
+                  backgroundImage: photoURL != null ? NetworkImage(photoURL!) : null,
+                  child: photoURL == null
+                      ? Icon(
+                          Icons.person,
+                          size: 150.0,
+                          color: Color.fromARGB(255, 117, 116, 116),
+                        )
+                      : null,
                 ),
               ),
               SizedBox(height: 40.0),
@@ -88,7 +145,7 @@ class _UploadProfilePageState extends State<UploadProfilePage> {
                 children: <Widget>[
                   UploadProfile(
                     onPressed: () {
-                      _pickImage(context); // Call the function to pick an image
+                      _pickImage(context);
                     },
                   ),
                 ],
@@ -96,7 +153,15 @@ class _UploadProfilePageState extends State<UploadProfilePage> {
               SizedBox(height: 20.0),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/setlocationpage'); // Navigate to the next page
+                  Navigator.pushNamed(
+  context,
+  '/homebar',
+  arguments: {
+    'currentIndex': 3,
+    'photoURL': widget.photoURL, // Pass the photoURL parameter
+  },
+);
+
                 },
                 style: ElevatedButton.styleFrom(
                   primary: Color(int.parse('FF6440', radix: 16)).withOpacity(1.0),
@@ -125,7 +190,7 @@ class UploadProfile extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
       child: TextButton(
-        onPressed: onPressed, // Call the original onPressed function
+        onPressed: onPressed,
         style: TextButton.styleFrom(
           primary: Colors.transparent,
           padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 100.0),

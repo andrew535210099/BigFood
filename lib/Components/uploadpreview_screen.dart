@@ -7,6 +7,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'homebar.dart';
 
 class ProfileScreen extends StatefulWidget {
+
+  final String? photoURL;
+  
+  const ProfileScreen({this.photoURL});
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
@@ -16,6 +20,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   late User _user;
+  late String imagePath;
+  String? photoURL;
 
   @override
   void initState() {
@@ -35,6 +41,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       setState(() {
         userProvider.setUsername(userData['username']);
         userProvider.setEmail(userData['email']);
+        photoURL = userData['photoURL'];
+        print(photoURL);
       });
     }
   }
@@ -123,6 +131,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+            appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: const Color.fromARGB(255, 255, 100, 64),
+        title: const Text('Profile'),
+      ),
       body: Consumer<UserProvider>(
         builder: (context, userProvider, _) {
           final username = userProvider.getUsername();
@@ -136,31 +149,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Stack(
                   children: [
                     Row(
-                      
                       children: [
                         CircleAvatar(
-                          radius: 60.0,
-                          backgroundImage: AssetImage('assets/bg-welcome.jpg'),
-                        ),
-                        SizedBox(width: 16.0),
+          radius: 50.0,
+          backgroundImage: photoURL != null ? NetworkImage(photoURL!) : null,
+        ),
+
+
+                        // SizedBox(width: 16.0),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              username,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18.0,
-                              ),
-                            ),
+                              Text(
+                                  username,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  
+                                  ),
+                                  softWrap: false,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis, // new
+                                ),
                             SizedBox(height: 10),
-                            Text(
-                              email,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18.0,
-                              ),
-                            ),
+                             Text(
+                                  email,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                   
+                                  ),
+                                   softWrap: false,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis, // new
+                                ),
                             SizedBox(height: 10),
                             // Text(
                             //   'Nomor Telepon',
@@ -218,7 +238,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       title: Text('Help'),
                       onTap: () {
                         // Action when Help is clicked
-                          Navigator.pushNamed(context, '/help');
                       },
                     ),
                   ],
