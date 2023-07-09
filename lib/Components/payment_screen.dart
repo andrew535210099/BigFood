@@ -63,7 +63,11 @@ class PaymentMethodPage extends StatelessWidget {
             SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/profile');// Navigate to the next page
+               Navigator.pushNamed(
+                          context,
+                          '/homebar',
+                         // Pindah ke tab ke-2 (indeks 1)
+                        );
               },
               style: ElevatedButton.styleFrom(
                 primary: Color(int.parse('FF6440', radix: 16)).withOpacity(1.0),
