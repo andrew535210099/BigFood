@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:duds/UserData/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/widgets.dart';
@@ -76,7 +75,6 @@ class _LoginScreenState extends State<LoginScreen> {
             await db.collection('users').doc(user!.uid).get();
         final username = userSnapshot.get('username');
         final email = userSnapshot.get('email');
-        final photo = userSnapshot.get('photoURL');
 
         // Set the username in the userProvider
         final userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -90,19 +88,30 @@ class _LoginScreenState extends State<LoginScreen> {
     }
     // Handle error
     }catch(error){
-       WidgetsBinding.instance.addPostFrameCallback((_) {
-    Fluttertoast.showToast(
-      msg: 'Error logging in: $error',
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.CENTER,
-      backgroundColor: Color(int.parse('FF6440', radix: 16)).withOpacity(1.0),
-      textColor: Colors.white,
-    );
-  });
+      showAlertDialog(context, 'Error Logging In', 'Failed to log in. Please check your credentials and try again.');
+      print('Error logging in: $error');
     }
   }
 }
-
+void showAlertDialog(BuildContext context, String title, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
 String hashPassword(String password) {
   final bytes = utf8.encode(password); // Konversi password ke bytes
