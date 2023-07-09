@@ -7,7 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:crypto/crypto.dart';
 import 'package:flutter/widgets.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -48,7 +47,6 @@ class _LoginScreenState extends State<LoginScreen> {
             await db.collection('users').doc(user!.uid).get();
         final username = userSnapshot.get('username');
         final email = userSnapshot.get('email');
-        final photo = userSnapshot.get('photoURL');
 
         // Set the username in the userProvider
         final userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -90,15 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
     // Handle error
     }catch(error){
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-    Fluttertoast.showToast(
-      msg: 'Error logging in: $error',
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.CENTER,
-      backgroundColor: Color(int.parse('FF6440', radix: 16)).withOpacity(1.0),
-      textColor: Colors.white,
-    );
-  });
+      print('Error logging in: $error');
     }
   }
 }

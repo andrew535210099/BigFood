@@ -146,9 +146,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Row(
                       children: [
                         CircleAvatar(
-  radius: 80.0,
-  backgroundImage: photoURL != null ? NetworkImage(photoURL!) : null,
-),
+          radius: 80.0,
+          backgroundImage: photoURL != null ? NetworkImage(photoURL!) : null,
+        ),
 
 
                         SizedBox(width: 16.0),
