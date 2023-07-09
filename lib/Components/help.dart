@@ -47,7 +47,7 @@ class Step {
 
 List<Step> getSteps() {
   return [
-    Step('Mengapa saya tidak bisa membuat pesanan di checkout?', 'answer'),
+    Step('Mengapa saya tidak bisa membuat pesanan di checkout?', 'Pastikan terkoneksi ke internet'),
     Step('Mengapa saya tidak bisa login ke akun BigFood saya?',
         '1. Pastikan password dan email yang dimasukan sudah benar, 2. Apakah anda sudah 5 kali berturut-turut salah password? jika ya, akun ada sudah terblokir sehingga anda tidak dapat login ke akun BigFood anda, 3. Jika lupa Password, anda bisa melakukan `reset password`'),
     Step('Bagaimana cara memperbarui profile saya?',
@@ -65,7 +65,7 @@ List<Step> getSteps() {
     Step('Bisakah saya mengganti menu setelah pemesanan terbuat?',
         'Tidak, anda tidak dapat mengganti menu saat pesanan terbuat. Oleh sebab itu perhatikan menu dan jumlah sebelum anda checkout'),
     Step('Dimana saya melapor jika terjadi kendala dalam hal pembayaran?',
-        'Untuk kendala pembayaran, anda bisa menghubungi bigfood@gmail.com atau hubungi cs kami 08...'),
+        'Untuk kendala pembayaran, anda bisa menghubungi bigfood@gmail.com atau hubungi cs kami 0821660457'),
     Step(
         'Aplikasi tidak dapat terbuka, tiba tiba tertutup atau muncul kode error',
         'Perhatikan informasi yang diberikan dari error, pastikan benar'),
@@ -81,7 +81,7 @@ List<Step> getSteps() {
         'Dapat melaporkan ke bigfood@gmail.com'),
     Step('Bagaimana kontak driver?', 'Dapat melalui fitur Chat'),
     Step('Lapor kendala pembayaran',
-        'Untuk kendala pembayaran, anda bisa menghubungi bigfood@gmail.com atau hubungi cs kami 08...'),
+        'Untuk kendala pembayaran, anda bisa menghubungi bigfood@gmail.com atau hubungi cs kami 0821660457'),
     Step('Bagaimana cara melakukan check out pesanan saya?',
         'Untuk melakukan checkout pesanan, anda dapat klik halaman `checkout` pada aplikasi kami, lalu anda bisa melakukan pembayaran untuk checkout'),
   ];
