@@ -46,6 +46,13 @@ class _HomePageState extends State<HomePage> {
   int sandwichQuantity = 0;
   int pizzaRollQuantity = 0;
   int mushroomSoupQuantity = 0;
+
+  int _zingerBurgerQuantity = 0;
+  int _rollParathaQuantity = 0;
+  int _burgerQuantity = 0;
+  int _sandwichQuantity = 0;
+  int _pizzaRollQuantity = 0;
+  int _mushroomSoupQuantity = 0;
   
   List<String> FakeName = [
     "Jane Lit",
@@ -74,6 +81,7 @@ class _HomePageState extends State<HomePage> {
   void incrementBurger() {
     setState(() {
       burgerQuantity++;
+      _burgerQuantity = burgerQuantity;
       updateCart();
     });
   }
@@ -82,6 +90,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       if (burgerQuantity > 0) {
         burgerQuantity--;
+        _burgerQuantity = burgerQuantity;
         updateCart();
       }
     });
@@ -90,6 +99,7 @@ class _HomePageState extends State<HomePage> {
   void incrementSandwich() {
     setState(() {
       sandwichQuantity++;
+      _sandwichQuantity = sandwichQuantity;
       updateCart();
     });
   }
@@ -98,6 +108,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       if (sandwichQuantity > 0) {
         sandwichQuantity--;
+        _sandwichQuantity = sandwichQuantity;
         updateCart();
       }
     });
@@ -106,6 +117,7 @@ class _HomePageState extends State<HomePage> {
   void incrementPizzaRoll() {
     setState(() {
       pizzaRollQuantity++;
+      _pizzaRollQuantity = pizzaRollQuantity;
       updateCart();
     });
   }
@@ -114,6 +126,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       if (pizzaRollQuantity > 0) {
         pizzaRollQuantity--;
+        _pizzaRollQuantity = pizzaRollQuantity;
         updateCart();
       }
     });
@@ -122,6 +135,7 @@ class _HomePageState extends State<HomePage> {
   void incrementmushroomSoup() {
     setState(() {
       mushroomSoupQuantity++;
+      _mushroomSoupQuantity = mushroomSoupQuantity;
       updateCart();
     });
   }
@@ -130,6 +144,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       if (mushroomSoupQuantity > 0) {
         mushroomSoupQuantity--;
+        _mushroomSoupQuantity = mushroomSoupQuantity;
         updateCart();
       }
     });
@@ -138,6 +153,7 @@ class _HomePageState extends State<HomePage> {
   void incrementZingerBurgerQuantity() {
     setState(() {
       zingerBurgerQuantity++;
+      _zingerBurgerQuantity =zingerBurgerQuantity;
       updateCart();
     });
   }
@@ -146,6 +162,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       if (zingerBurgerQuantity > 0) {
         zingerBurgerQuantity--;
+        _zingerBurgerQuantity =zingerBurgerQuantity;
         updateCart();
       }
     });
@@ -154,6 +171,7 @@ class _HomePageState extends State<HomePage> {
   void incrementRollParathaQuantity() {
     setState(() {
       rollParathaQuantity++;
+      _rollParathaQuantity = rollParathaQuantity;
       updateCart();
     });
   }
@@ -162,6 +180,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       if (rollParathaQuantity > 0) {
         rollParathaQuantity--;
+        _rollParathaQuantity = rollParathaQuantity;
         updateCart();
       }
     });
@@ -289,6 +308,15 @@ void addToCart() async {
             'zingerBurgerQuantity': zingerBurgerQuantity,
             'rollParathaQuantity': rollParathaQuantity,
           });
+
+          setState(() {
+      _burgerQuantity = burgerQuantity;
+      _sandwichQuantity = sandwichQuantity;
+      _pizzaRollQuantity = pizzaRollQuantity;
+      _mushroomSoupQuantity = mushroomSoupQuantity;
+      _zingerBurgerQuantity = zingerBurgerQuantity;
+      _rollParathaQuantity = rollParathaQuantity;
+    });
         
         } else {
           print('Cart does not exist');
@@ -432,7 +460,7 @@ void addToCart() async {
                               onPressed: decrementZingerBurgerQuantity,
                             ),
                             Text(
-                              zingerBurgerQuantity.toString(),
+                              _zingerBurgerQuantity.toString(),
                               style: TextStyle(
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.bold,
@@ -482,7 +510,7 @@ void addToCart() async {
                               onPressed: decrementRollParathaQuantity,
                             ),
                             Text(
-                              rollParathaQuantity.toString(),
+                              _rollParathaQuantity.toString(),
                               style: TextStyle(
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.bold,
@@ -527,7 +555,7 @@ Row(
                               onPressed: decrementBurger,
                             ),
                             Text(
-                              burgerQuantity.toString(),
+                              _burgerQuantity.toString(),
                               style: TextStyle(
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.bold,
@@ -572,7 +600,7 @@ Row(
                               onPressed: decrementSandwich,
                             ),
                             Text(
-                              sandwichQuantity.toString(),
+                              _sandwichQuantity.toString(),
                               style: TextStyle(
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.bold,
@@ -617,7 +645,7 @@ Row(
                               onPressed: decrementPizzaRoll,
                             ),
                             Text(
-                              pizzaRollQuantity.toString(),
+                              _pizzaRollQuantity.toString(),
                               style: TextStyle(
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.bold,
@@ -662,7 +690,7 @@ Row(
                               onPressed: decrementmushroomSoup,
                             ),
                             Text(
-                              mushroomSoupQuantity.toString(),
+                              _mushroomSoupQuantity.toString(),
                               style: TextStyle(
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.bold,
