@@ -138,9 +138,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: Consumer<UserProvider>(
         builder: (context, userProvider, _) {
-          final username = userProvider.getUsername();
-          final email = userProvider.getEmail();
-
+          String username = userProvider.getUsername();
+          String email = userProvider.getEmail();
+          int maxLength=15;
+          if(username.length>maxLength){
+            username=username.substring(0,maxLength)+"...";
+          }
+          if(email.length>maxLength){
+            email=email.substring(0,maxLength)+"...";
+          }
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -172,16 +178,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 overflow: TextOverflow.ellipsis, // new
                                 ),
                             SizedBox(height: 10),
-                            //  Text(
-                            //       email,
-                            //       style: TextStyle(
-                            //         fontWeight: FontWeight.bold,
+                             Text(
+                                  email,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
                                    
-                            //       ),
-                            //        softWrap: false,
-                            //     maxLines: 1,
-                            //     overflow: TextOverflow.ellipsis, // new
-                            //     ),
+                                  ),
+                                   softWrap: false,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis, // new
+                                ),
                             SizedBox(height: 10),
                             // Text(
                             //   'Nomor Telepon',
