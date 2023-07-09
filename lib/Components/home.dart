@@ -46,6 +46,21 @@ class _HomePageState extends State<HomePage> {
   int sandwichQuantity = 0;
   int pizzaRollQuantity = 0;
   int mushroomSoupQuantity = 0;
+  
+  List<String> FakeName = [
+    "Jane Lit",
+    "Red Dave",
+    "Patrick",
+    "Ashley",
+    "Mina",
+  ];
+  List<String> review = [
+  "The pizza was great!",
+  "I like the burgers!",
+  "A tasty treat!",
+  "Thanks BigFood!",
+  "Love it!",
+];
 
   @override
   void initState() {
@@ -152,23 +167,6 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-
-  void incrementCreamyBiscuitQuantity() {
-    setState(() {
-      creamyBiscuitQuantity++;
-      updateCart();
-    });
-  }
-
-  void decrementCreamyBiscuitQuantity() {
-    setState(() {
-      if (creamyBiscuitQuantity > 0) {
-        creamyBiscuitQuantity--;
-        updateCart();
-      }
-    });
-  }
-
 void updateCart() async {
   _user = _auth.currentUser!;
   final String userUID = _user.uid;
@@ -187,7 +185,6 @@ void updateCart() async {
         'mushroomSoupQuantity': mushroomSoupQuantity,
         'zingerBurgerQuantity': zingerBurgerQuantity,
         'rollParathaQuantity': rollParathaQuantity,
-        'creamyBiscuitQuantity': creamyBiscuitQuantity,
       });
     } else {
       await cartRef.doc(userUID).set({
@@ -198,7 +195,6 @@ void updateCart() async {
         'mushroomSoupQuantity': mushroomSoupQuantity,
         'zingerBurgerQuantity': zingerBurgerQuantity,
         'rollParathaQuantity': rollParathaQuantity,
-        'creamyBiscuitQuantity': creamyBiscuitQuantity,
       });
     }
   } catch (e) {
@@ -222,8 +218,7 @@ void addToCart() async {
       pizzaRollQuantity = cartData['pizzaRollQuantity'] ?? 0;
       mushroomSoupQuantity = cartData['mushroomSoupQuantity'] ?? 0;
       zingerBurgerQuantity = cartData['zingerBurgerQuantity'] ?? 0;
-      rollParathaQuantity = cartData['rollParathaQuantity'] ?? 0;      
-      creamyBiscuitQuantity = cartData['creamyBiscuitQuantity'] ?? 0;
+      rollParathaQuantity = cartData['rollParathaQuantity'] ?? 0;
     } else {
       await cartRef.doc(userUID).set({
         'email': userEmail, // Simpan email pengguna di dokumen keranjang
@@ -239,8 +234,6 @@ void addToCart() async {
         'zingerBurgerPrice': 20000,
         'rollParathaQuantity': rollParathaQuantity,
         'rollParathaPrice': 25000,
-        'creamyBiscuitQuantity': creamyBiscuitQuantity,
-        'creamyBiscuitPrice': 20000,
       });
     }
   } catch (e) {
@@ -278,8 +271,7 @@ void addToCart() async {
           final int pizzaRollQuantity = cartData['pizzaRollQuantity'] ?? 0;
           final int mushroomSoupQuantity = cartData['mushroomSoupQuantity'] ?? 0;
           final int zingerBurgerQuantity = cartData['zingerBurgerQuantity'] ?? 0;
-          final int rollParathaQuantity = cartData['rollParathaQuantity'] ?? 0;          
-          final int creamyBiscuitQuantity = cartData['creamyBiscuitQuantity'] ?? 0;
+          final int rollParathaQuantity = cartData['rollParathaQuantity'] ?? 0;
 
           // Lakukan sesuatu dengan data yang telah diambil
           print('Burger Quantity: $burgerQuantity');
@@ -288,15 +280,14 @@ void addToCart() async {
           print('Mushroom Soup Quantity: $mushroomSoupQuantity');
           print('Zinger Burger Quantity: $zingerBurgerQuantity');
           print('Roll Paratha Quantity: $rollParathaQuantity');
-          print('Creamy Biscuit Quantity: $creamyBiscuitQuantity');
+
            userProvider.updateCartData({
             'burgerQuantity': burgerQuantity,
             'sandwichQuantity': sandwichQuantity,
             'pizzaRollQuantity': pizzaRollQuantity,
             'mushroomSoupQuantity': mushroomSoupQuantity,
             'zingerBurgerQuantity': zingerBurgerQuantity,
-            'rollParathaQuantity': rollParathaQuantity,            
-            'creamyBiscuitQuantity': creamyBiscuitQuantity,
+            'rollParathaQuantity': rollParathaQuantity,
           });
         
         } else {
@@ -705,89 +696,44 @@ SliverPadding(
                   ]),
                 ),
     ),
-  SliverPadding(
-      padding: const EdgeInsets.all(20),
-      
-      sliver: SliverGrid.count(
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-        crossAxisCount: 2,
-        childAspectRatio: (1 / 1.1),
-        children: <Widget>[
-          // Zinger Burger
-          Container(
-            padding: const EdgeInsets.all(8),
-            color: const Color.fromARGB(255, 255, 238, 218),
-            child: Column(children: [
-                  Image.asset(
-                    'assets/creamyBiscuit.png',
-                    fit: BoxFit.contain,
-                  ),
-              Text("Creamy Biscuit",
-              style:TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 0, 0, 0),
+        
+          SliverToBoxAdapter(
+            child: Container(
+              height: 100.0,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 5,
+                itemBuilder: (context, index) {
+                  return 
+                  Container(
+                    width: 100.0,
+                    child: Card(
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              Text(FakeName[index],
+                              style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17.0,
+                                    ),),
+                                SizedBox(height: 10.0,),    
+                              Text(review[index]
+                              ,style: TextStyle(
+                                  
+                                      fontSize: 15.0,
+                                    )),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
+                  );
+                },
               ),
-                            Text("Rp 20.000",
-              style:TextStyle(
-                      fontSize: 17.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 255, 100, 64),
-                    ),
-              ),
-
-            ],),
+            ),
           ),
-          // Roll Paratha
-          Container(
-            padding: const EdgeInsets.all(8),
-            color: const Color.fromARGB(255, 255, 238, 218),
-            child: Column(children: [
-                  Image.asset(
-                    'assets/rollParatha.png',
-                    fit: BoxFit.contain,
-                  ),
-              Text("Roll Paratha",
-              style:TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 0, 0, 0),
-                    ),
-              ),
-                            Text("Rp 25.000",
-              style:TextStyle(
-                      fontSize: 17.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 255, 100, 64),
-                    ),
-              ),
-
-            ],),
-          ),/*
-        Container(
-            padding: const EdgeInsets.all(8),
-            color: const Color.fromARGB(255, 255, 238, 218),
-            child: Column(children: [
-                  Image.asset(
-                    'assets/burger.png',
-                    fit: BoxFit.contain,
-                  ),
-              Text("Burger",
-              style:TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 0, 0, 0),
-                    ),
-              ),
-                            Text("Rp 15.000",
-              style:TextStyle(
-                      fontSize: 17.0,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 255, 100, 64),
-                    ),
-              ),
 
   ],
 ),
