@@ -131,6 +131,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+            appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: const Color.fromARGB(255, 255, 100, 64),
+        title: const Text('Profile'),
+      ),
       body: Consumer<UserProvider>(
         builder: (context, userProvider, _) {
           final username = userProvider.getUsername();
@@ -146,30 +151,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Row(
                       children: [
                         CircleAvatar(
-          radius: 80.0,
+          radius: 50.0,
           backgroundImage: photoURL != null ? NetworkImage(photoURL!) : null,
         ),
 
 
-                        SizedBox(width: 16.0),
+                        // SizedBox(width: 16.0),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              username,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18.0,
-                              ),
-                            ),
+                              Text(
+                                  username,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  
+                                  ),
+                                  softWrap: false,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis, // new
+                                ),
                             SizedBox(height: 10),
-                            Text(
-                              email,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18.0,
-                              ),
-                            ),
+                             Text(
+                                  email,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                   
+                                  ),
+                                   softWrap: false,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis, // new
+                                ),
                             SizedBox(height: 10),
                             // Text(
                             //   'Nomor Telepon',
