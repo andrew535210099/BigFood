@@ -1,9 +1,14 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,42 +28,53 @@ class _UploadProfilePageState extends State<UploadProfilePage> {
   String? photoURL;
 
   Future<void> _pickImage(BuildContext context) async {
-    final XTypeGroup typeGroup = XTypeGroup(
-      label: 'images',
-      extensions: ['jpg', 'jpeg', 'png'],
-    );
+  final XFile? pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
 
-    final List<XFile> pickedImages = await openFiles(
-      acceptedTypeGroups: [typeGroup],
-    );
+  if (pickedImage != null) {
+    setState(() {
+      imagePath = pickedImage.path;
+      print(imagePath);
+    });
 
-    if (pickedImages != null && pickedImages.isNotEmpty) {
-      setState(() {
-        imagePath = pickedImages[0].path;
-        print(imagePath);
-      });
-
-      await _uploadProfilePhoto();
-    }
+    await _uploadProfilePhoto();
   }
+}
+
 
   Future<void> _uploadProfilePhoto() async {
     User? user = FirebaseAuth.instance.currentUser;
     final email = user?.email;
     if (user != null) {
+      
       try {
-        await user.updatePhotoURL(imagePath);
-        print('Foto profil berhasil diunggah');
 
-        var usersRef = FirebaseFirestore.instance.collection('users');
-        var querySnapshot = await usersRef.where('email', isEqualTo: email).get();
+        FirebaseStorage storage = FirebaseStorage.instance;
 
-        if (querySnapshot.docs.isNotEmpty) {
-          var doc = querySnapshot.docs.first;
-          await doc.reference.update({'photoURL': imagePath});
+        Reference storageRef = storage.ref().child('profile_photos/${user.uid}.jpg');
+            
+        File imageFile = File(imagePath);
+        
+        if (imageFile.existsSync()) {
+
+          UploadTask uploadTask = storageRef.putFile(imageFile);
+          TaskSnapshot snapshot = await uploadTask.whenComplete(() => null);
+          String downloadURL = await snapshot.ref.getDownloadURL();
+
+          await user.updatePhotoURL(downloadURL);
+          print('Foto profil berhasil diunggah');
+
+          var usersRef = FirebaseFirestore.instance.collection('users');
+          var querySnapshot = await usersRef.where('email', isEqualTo: email).get();
+
+          if (querySnapshot.docs.isNotEmpty) {
+            var doc = querySnapshot.docs.first;  
+            await doc.reference.update({'photoURL': downloadURL});
+          }
+
+          getUserPhotoURL();
+        } else {
+          print('File gambar tidak ditemukan');
         }
-
-        getUserPhotoURL();
       } catch (error) {
         print('Gagal mengunggah foto profil: $error');
       }
@@ -86,9 +102,9 @@ class _UploadProfilePageState extends State<UploadProfilePage> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 255, 100, 64),
-          systemOverlayStyle: SystemUiOverlayStyle.light,
-          title: const Text('Upload Photo'),
-        ),
+        systemOverlayStyle: SystemUiOverlayStyle.light,
+        title: const Text('Upload Photo'),
+      ),
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -145,10 +161,10 @@ class _UploadProfilePageState extends State<UploadProfilePage> {
               ElevatedButton(
                 onPressed: () {
                   Navigator.pushNamed(
-                          context,
-                          '/homebar',
-                          arguments: {'currentIndex': 3}, // Pindah ke tab ke-2 (indeks 1)
-                        );
+                    context,
+                    '/homebar',
+                    arguments: {'currentIndex': 3}, // Pindah ke tab ke-2 (indeks 1)
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   primary: Color(int.parse('FF6440', radix: 16)).withOpacity(1.0),
